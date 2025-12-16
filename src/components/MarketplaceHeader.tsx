@@ -19,7 +19,7 @@ const MarketplaceHeader = ({ onMenuClick }: MarketplaceHeaderProps) => {
           <div className="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center">
             <span className="text-white text-xl font-bold">A</span>
           </div>
-          <span className="text-xl font-bold text-blue-600 hidden sm:block">AgentHub</span>
+          <span className="text-xl font-bold text-blue-600 hidden sm:block">Agent Store</span>
         </div>
       </div>
 
