@@ -20,7 +20,7 @@ const Navbar = ({ visible, onCommandOpen }: NavbarProps) => {
       <nav className="max-w-7xl mx-auto bg-card/80 backdrop-blur-lg rounded-2xl px-6 py-3 flex items-center justify-between border border-border shadow-sm">
         {/* Logo */}
         <a href="/" className="flex items-center gap-2 text-foreground font-semibold text-lg">
-          <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
+          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center shadow-sm">
             <span className="text-primary-foreground text-sm font-bold">A</span>
           </div>
           AgentHub
