@@ -11,9 +11,9 @@ const Hero = ({ onExplore }: HeroProps) => {
       {/* Light gradient background */}
       <div className="absolute inset-0 gradient-mesh" />
       
-      {/* Soft floating orbs */}
+      {/* Soft floating orbs - pastel colors */}
       <motion.div
-        className="absolute top-1/3 left-1/4 w-[500px] h-[500px] rounded-full bg-primary/10 blur-3xl"
+        className="absolute top-1/3 left-1/4 w-[500px] h-[500px] rounded-full bg-sage/20 blur-3xl"
         animate={{
           x: [0, 30, 0],
           y: [0, 20, 0],
@@ -25,13 +25,25 @@ const Hero = ({ onExplore }: HeroProps) => {
         }}
       />
       <motion.div
-        className="absolute bottom-1/3 right-1/4 w-[400px] h-[400px] rounded-full bg-gold/10 blur-3xl"
+        className="absolute bottom-1/3 right-1/4 w-[400px] h-[400px] rounded-full bg-dusty-rose/20 blur-3xl"
         animate={{
           x: [0, -20, 0],
           y: [0, -15, 0],
         }}
         transition={{
           duration: 12,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      />
+      <motion.div
+        className="absolute top-1/2 right-1/3 w-[300px] h-[300px] rounded-full bg-peach/15 blur-3xl"
+        animate={{
+          x: [0, 15, 0],
+          y: [0, -25, 0],
+        }}
+        transition={{
+          duration: 14,
           repeat: Infinity,
           ease: "easeInOut",
         }}
@@ -45,7 +57,7 @@ const Hero = ({ onExplore }: HeroProps) => {
           transition={{ duration: 0.6 }}
           className="mb-8"
         >
-          <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-medium bg-primary/10 text-primary">
+          <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-medium bg-sage/20 text-cocoa">
             <Sparkles className="w-3.5 h-3.5" />
             The Future of AI Agents
           </span>

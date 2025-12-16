@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import Hero from "@/components/Hero";
 import Navbar from "@/components/Navbar";
-import AgentGrid from "@/components/AgentGrid";
+import MarketplaceScene from "@/components/MarketplaceScene";
 import CommandPalette from "@/components/CommandPalette";
 import AgentDetail from "@/components/AgentDetail";
 import LaunchPanel from "@/components/LaunchPanel";
@@ -68,8 +68,18 @@ const Index = () => {
       {/* Hero Section */}
       <Hero onExplore={handleExplore} />
 
-      {/* Agent Grid */}
-      <AgentGrid agents={agents} onAgentClick={handleAgentClick} />
+      {/* 3D Agent Marketplace */}
+      <section id="agents" className="relative">
+        <div className="text-center pt-16 pb-8 px-6">
+          <h2 className="text-3xl md:text-4xl font-semibold text-foreground mb-4">
+            Explore the Marketplace
+          </h2>
+          <p className="text-muted-foreground max-w-xl mx-auto">
+            Navigate through our curated collection of AI agents
+          </p>
+        </div>
+        <MarketplaceScene agents={agents} onAgentClick={handleAgentClick} />
+      </section>
 
       {/* Footer */}
       <footer className="py-12 px-6 border-t border-border/50">
