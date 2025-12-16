@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Fraunces:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,9 +6,9 @@
 
 @layer base {
   :root {
-    /* Brown + Pastel Premium Market Palette */
-    --background: 35 25% 94%; /* warm cream #F5EDE3 */
-    --foreground: 20 35% 18%; /* espresso #3D2B1F */
+    /* Facebook-style colors */
+    --background: 220 4% 95%; /* #F0F2F5 gray background */
+    --foreground: 214 18% 17%; /* #1C1E21 dark text */
 
     --card: 35 35% 97%; /* soft white #FDF8F0 */
     --card-foreground: 20 35% 18%;

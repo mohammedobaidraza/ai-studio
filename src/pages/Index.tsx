@@ -1,45 +1,25 @@
-import { useState, useEffect, useCallback } from "react";
-import Hero from "@/components/Hero";
-import Navbar from "@/components/Navbar";
-import MarketplaceScene from "@/components/MarketplaceScene";
-import CommandPalette from "@/components/CommandPalette";
+import { useState, useCallback, useMemo } from "react";
+import MarketplaceHeader from "@/components/MarketplaceHeader";
+import MarketplaceSidebar from "@/components/MarketplaceSidebar";
+import MarketplaceCard from "@/components/MarketplaceCard";
+import MobileFilterDrawer from "@/components/MobileFilterDrawer";
 import AgentDetail from "@/components/AgentDetail";
 import LaunchPanel from "@/components/LaunchPanel";
 import { agents, Agent } from "@/data/agents";
 
 const Index = () => {
-  const [showNavbar, setShowNavbar] = useState(false);
-  const [commandOpen, setCommandOpen] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedAgent, setSelectedAgent] = useState<Agent | null>(null);
   const [detailOpen, setDetailOpen] = useState(false);
   const [launchOpen, setLaunchOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  // Handle scroll for navbar visibility
-  useEffect(() => {
-    const handleScroll = () => {
-      setShowNavbar(window.scrollY > 100);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  // Handle keyboard shortcuts
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
-        e.preventDefault();
-        setCommandOpen((prev) => !prev);
-      }
-    };
-
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, []);
-
-  const handleExplore = useCallback(() => {
-    document.getElementById("agents")?.scrollIntoView({ behavior: "smooth" });
-  }, []);
+  const filteredAgents = useMemo(() => {
+    if (!selectedCategory) return agents;
+    return agents.filter(agent => 
+      agent.tags.some(tag => tag.toLowerCase() === selectedCategory.toLowerCase())
+    );
+  }, [selectedCategory]);
 
   const handleAgentClick = useCallback((agent: Agent) => {
     setSelectedAgent(agent);
@@ -52,58 +32,71 @@ const Index = () => {
     setLaunchOpen(true);
   }, []);
 
-  const handleCommandSelect = useCallback((agent: Agent) => {
-    setSelectedAgent(agent);
-    setDetailOpen(true);
-  }, []);
-
   return (
-    <div className="min-h-screen bg-background">
-      {/* Navigation - appears on scroll */}
-      <Navbar
-        visible={showNavbar}
-        onCommandOpen={() => setCommandOpen(true)}
-      />
+    <div className="min-h-screen bg-gray-100">
+      {/* Header */}
+      <MarketplaceHeader onMenuClick={() => setMobileMenuOpen(true)} />
 
-      {/* Hero Section */}
-      <Hero onExplore={handleExplore} />
+      <div className="flex">
+        {/* Desktop Sidebar */}
+        <MarketplaceSidebar 
+          selectedCategory={selectedCategory}
+          onCategorySelect={setSelectedCategory}
+        />
 
-      {/* 3D Agent Marketplace */}
-      <section id="agents" className="relative">
-        <div className="text-center pt-16 pb-8 px-6">
-          <h2 className="text-3xl md:text-4xl font-semibold text-foreground mb-4">
-            Explore the Marketplace
-          </h2>
-          <p className="text-muted-foreground max-w-xl mx-auto">
-            Navigate through our curated collection of AI agents
-          </p>
-        </div>
-        <MarketplaceScene agents={agents} onAgentClick={handleAgentClick} />
-      </section>
+        {/* Mobile Filter Drawer */}
+        <MobileFilterDrawer
+          isOpen={mobileMenuOpen}
+          onClose={() => setMobileMenuOpen(false)}
+          selectedCategory={selectedCategory}
+          onCategorySelect={setSelectedCategory}
+        />
 
-      {/* Footer */}
-      <footer className="py-12 px-6 border-t border-border/50">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2 text-muted-foreground">
-            <div className="w-6 h-6 rounded bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center">
-              <span className="text-primary-foreground text-xs font-bold">A</span>
+        {/* Main Content */}
+        <main className="flex-1 p-4 lg:p-6">
+          {/* Title Bar */}
+          <div className="mb-4 flex items-center justify-between">
+            <div>
+              <h2 className="text-xl font-bold text-gray-900">
+                {selectedCategory ? `${selectedCategory} Agents` : "Today's picks"}
+              </h2>
+              <p className="text-sm text-gray-500">
+                {filteredAgents.length} agents available
+              </p>
             </div>
-            <span className="text-sm">© 2024 AgentHub. All rights reserved.</span>
+            <select className="px-3 py-2 bg-white border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+              <option>Most Popular</option>
+              <option>Highest Rated</option>
+              <option>Newest</option>
+              <option>A-Z</option>
+            </select>
           </div>
-          <div className="flex items-center gap-6 text-sm text-muted-foreground">
-            <a href="#" className="hover:text-foreground transition-colors">Privacy</a>
-            <a href="#" className="hover:text-foreground transition-colors">Terms</a>
-            <a href="#" className="hover:text-foreground transition-colors">Documentation</a>
-          </div>
-        </div>
-      </footer>
 
-      {/* Command Palette */}
-      <CommandPalette
-        isOpen={commandOpen}
-        onClose={() => setCommandOpen(false)}
-        onAgentSelect={handleCommandSelect}
-      />
+          {/* Agent Grid */}
+          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3 lg:gap-4">
+            {filteredAgents.map((agent) => (
+              <MarketplaceCard
+                key={agent.id}
+                agent={agent}
+                onClick={() => handleAgentClick(agent)}
+              />
+            ))}
+          </div>
+
+          {/* Empty State */}
+          {filteredAgents.length === 0 && (
+            <div className="text-center py-16">
+              <p className="text-gray-500 text-lg">No agents found in this category</p>
+              <button 
+                onClick={() => setSelectedCategory(null)}
+                className="mt-4 text-blue-600 hover:underline"
+              >
+                Browse all agents
+              </button>
+            </div>
+          )}
+        </main>
+      </div>
 
       {/* Agent Detail Modal */}
       <AgentDetail
