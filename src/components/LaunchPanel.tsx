@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Send, Bot, User, Loader2, Sparkles } from "lucide-react";
+import { X, Send, Bot, User, Loader2, Shield } from "lucide-react";
 import { Agent } from "@/data/agents";
 
 interface Message {
@@ -57,7 +57,6 @@ const LaunchPanel = ({ agent, isOpen, onClose }: LaunchPanelProps) => {
     setInput("");
     setIsThinking(true);
 
-    // Simulate agent response
     setTimeout(() => {
       const agentMessage: Message = {
         id: (Date.now() + 1).toString(),
@@ -74,111 +73,142 @@ const LaunchPanel = ({ agent, isOpen, onClose }: LaunchPanelProps) => {
   return (
     <AnimatePresence>
       {isOpen && (
-        <motion.div
-          initial={{ x: "100%", opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          exit={{ x: "100%", opacity: 0 }}
-          transition={{ duration: 0.4, ease: [0.32, 0.72, 0, 1] }}
-          className="fixed inset-y-0 right-0 w-full md:w-[480px] lg:w-[540px] z-50 bg-card border-l border-border flex flex-col shadow-2xl"
-        >
-          {/* Header */}
-          <div className="flex items-center justify-between p-4 border-b border-border/50">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-primary/20 flex items-center justify-center">
-                <Bot className="w-5 h-5 text-primary" />
-              </div>
-              <div>
-                <div className="flex items-center gap-2">
-                  <h3 className="font-medium text-foreground">{agent.name}</h3>
-                  {agent.verified && <Sparkles className="w-3 h-3 text-primary" />}
-                </div>
-                <span className="text-xs text-muted-foreground">Active session</span>
-              </div>
-            </div>
-            <button
-              onClick={onClose}
-              className="p-2 rounded-xl hover:bg-muted/50 text-muted-foreground hover:text-foreground transition-colors"
-            >
-              <X className="w-5 h-5" />
-            </button>
-          </div>
+        <>
+          {/* Backdrop */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/50 z-50"
+            onClick={onClose}
+          />
 
-          {/* Messages */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-4">
-            {messages.map((message) => (
-              <motion.div
-                key={message.id}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className={`flex gap-3 ${message.role === "user" ? "justify-end" : ""}`}
-              >
-                {message.role === "agent" && (
-                  <div className="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center shrink-0">
-                    <Bot className="w-4 h-4 text-primary" />
-                  </div>
-                )}
-                <div
-                  className={`max-w-[80%] px-4 py-3 rounded-2xl ${
-                    message.role === "user"
-                      ? "bg-primary text-primary-foreground rounded-br-sm"
-                      : "bg-muted rounded-bl-sm"
-                  }`}
-                >
-                  <p className="text-sm leading-relaxed">{message.content}</p>
+          {/* Panel */}
+          <motion.div
+            initial={{ x: "100%" }}
+            animate={{ x: 0 }}
+            exit={{ x: "100%" }}
+            transition={{ duration: 0.3, ease: [0.32, 0.72, 0, 1] }}
+            className="fixed inset-y-0 right-0 w-full md:w-[480px] z-50 bg-white flex flex-col shadow-2xl"
+          >
+            {/* Header */}
+            <div className="flex items-center justify-between p-4 border-b border-gray-200 bg-white">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center overflow-hidden">
+                  {agent.logo ? (
+                    <img src={agent.logo} alt={agent.name} className="w-7 h-7 object-contain" />
+                  ) : (
+                    <Bot className="w-5 h-5 text-gray-600" />
+                  )}
                 </div>
-                {message.role === "user" && (
-                  <div className="w-8 h-8 rounded-lg bg-muted flex items-center justify-center shrink-0">
-                    <User className="w-4 h-4 text-muted-foreground" />
-                  </div>
-                )}
-              </motion.div>
-            ))}
-
-            {isThinking && (
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="flex gap-3"
-              >
-                <div className="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center shrink-0">
-                  <Bot className="w-4 h-4 text-primary" />
-                </div>
-                <div className="bg-muted rounded-2xl rounded-bl-sm px-4 py-3">
+                <div>
                   <div className="flex items-center gap-2">
-                    <Loader2 className="w-4 h-4 text-primary animate-spin" />
-                    <span className="text-sm text-muted-foreground">Thinking...</span>
+                    <h3 className="font-semibold text-gray-900">{agent.name}</h3>
+                    {agent.verified && (
+                      <Shield className="w-4 h-4 text-blue-600" />
+                    )}
                   </div>
+                  <span className="text-xs text-green-600 flex items-center gap-1">
+                    <span className="w-2 h-2 bg-green-500 rounded-full" />
+                    Active now
+                  </span>
                 </div>
-              </motion.div>
-            )}
-
-            <div ref={messagesEndRef} />
-          </div>
-
-          {/* Input */}
-          <div className="p-4 border-t border-border/50">
-            <div className="flex items-center gap-3 p-2 bg-muted rounded-xl border border-border">
-              <input
-                type="text"
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                onKeyDown={(e) => e.key === "Enter" && handleSend()}
-                placeholder="Type your message..."
-                className="flex-1 bg-transparent text-foreground placeholder:text-muted-foreground outline-none px-2 py-2 text-sm"
-              />
+              </div>
               <button
-                onClick={handleSend}
-                disabled={!input.trim() || isThinking}
-                className="p-2 rounded-lg bg-primary text-primary-foreground disabled:opacity-50 disabled:cursor-not-allowed hover:glow-sm transition-all"
+                onClick={onClose}
+                className="p-2 rounded-full hover:bg-gray-100 text-gray-500 hover:text-gray-700 transition-colors"
               >
-                <Send className="w-4 h-4" />
+                <X className="w-5 h-5" />
               </button>
             </div>
-            <p className="text-xs text-muted-foreground text-center mt-3">
-              Messages are processed in a secure sandbox
-            </p>
-          </div>
-        </motion.div>
+
+            {/* Messages */}
+            <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-gray-50">
+              {messages.map((message) => (
+                <motion.div
+                  key={message.id}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className={`flex gap-2 ${message.role === "user" ? "justify-end" : ""}`}
+                >
+                  {message.role === "agent" && (
+                    <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center shrink-0">
+                      {agent.logo ? (
+                        <img src={agent.logo} alt={agent.name} className="w-5 h-5 object-contain" />
+                      ) : (
+                        <Bot className="w-4 h-4 text-gray-600" />
+                      )}
+                    </div>
+                  )}
+                  <div
+                    className={`max-w-[75%] px-4 py-2.5 ${
+                      message.role === "user"
+                        ? "bg-blue-600 text-white rounded-[20px] rounded-br-sm"
+                        : "bg-white text-gray-900 rounded-[20px] rounded-bl-sm border border-gray-200"
+                    }`}
+                  >
+                    <p className="text-sm leading-relaxed">{message.content}</p>
+                  </div>
+                  {message.role === "user" && (
+                    <div className="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center shrink-0 overflow-hidden">
+                      <img 
+                        src="https://api.dicebear.com/7.x/avataaars/svg?seed=user" 
+                        alt="You" 
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  )}
+                </motion.div>
+              ))}
+
+              {isThinking && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="flex gap-2"
+                >
+                  <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center shrink-0">
+                    {agent.logo ? (
+                      <img src={agent.logo} alt={agent.name} className="w-5 h-5 object-contain" />
+                    ) : (
+                      <Bot className="w-4 h-4 text-gray-600" />
+                    )}
+                  </div>
+                  <div className="bg-white rounded-[20px] rounded-bl-sm px-4 py-3 border border-gray-200">
+                    <div className="flex items-center gap-1">
+                      <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
+                      <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
+                      <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+
+              <div ref={messagesEndRef} />
+            </div>
+
+            {/* Input */}
+            <div className="p-4 border-t border-gray-200 bg-white">
+              <div className="flex items-center gap-2">
+                <input
+                  type="text"
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  onKeyDown={(e) => e.key === "Enter" && handleSend()}
+                  placeholder="Aa"
+                  className="flex-1 bg-gray-100 text-gray-900 placeholder:text-gray-500 rounded-full px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-blue-500"
+                />
+                <button
+                  onClick={handleSend}
+                  disabled={!input.trim() || isThinking}
+                  className="p-2.5 rounded-full bg-blue-600 text-white disabled:opacity-50 disabled:cursor-not-allowed hover:bg-blue-700 transition-colors"
+                >
+                  <Send className="w-5 h-5" />
+                </button>
+              </div>
+            </div>
+          </motion.div>
+        </>
       )}
     </AnimatePresence>
   );
