@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Fraunces:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,53 +6,57 @@
 
 @layer base {
   :root {
-    /* Warm natural palette */
-    --background: 40 33% 98%;
-    --foreground: 218 17% 27%;
+    /* Brown + Pastel Premium Market Palette */
+    --background: 35 25% 94%; /* warm cream #F5EDE3 */
+    --foreground: 20 35% 18%; /* espresso #3D2B1F */
 
-    --card: 0 0% 100%;
-    --card-foreground: 218 17% 27%;
+    --card: 35 35% 97%; /* soft white #FDF8F0 */
+    --card-foreground: 20 35% 18%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 218 17% 27%;
+    --popover: 35 35% 97%;
+    --popover-foreground: 20 35% 18%;
 
-    --primary: 160 84% 39%;
-    --primary-foreground: 0 0% 100%;
+    --primary: 100 20% 70%; /* pastel sage #A7C4A0 */
+    --primary-foreground: 20 35% 18%;
 
-    --secondary: 40 20% 94%;
-    --secondary-foreground: 218 17% 27%;
+    --secondary: 20 30% 87%; /* soft peach #E8D4C4 */
+    --secondary-foreground: 20 35% 18%;
 
-    --muted: 40 15% 93%;
-    --muted-foreground: 218 12% 50%;
+    --muted: 30 18% 86%; /* warm neutral #E8DDD0 */
+    --muted-foreground: 20 20% 38%; /* cocoa #6B5344 */
 
-    --accent: 38 92% 50%;
-    --accent-foreground: 218 17% 15%;
+    --accent: 0 25% 85%; /* dusty rose #E8C4C4 */
+    --accent-foreground: 20 35% 18%;
 
-    --destructive: 0 84% 60%;
+    --destructive: 0 65% 55%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 40 15% 88%;
-    --input: 40 15% 88%;
-    --ring: 160 84% 39%;
+    --border: 30 18% 80%;
+    --input: 30 18% 84%;
+    --ring: 100 20% 60%;
 
     --radius: 1rem;
 
-    /* Custom tokens */
-    --glass: 0 0% 100%;
-    --glass-border: 40 15% 88%;
-    --glow: 160 84% 39%;
-    --gradient-start: 160 84% 39%;
-    --gradient-end: 161 94% 30%;
-    --gold: 38 92% 50%;
+    /* Custom premium tokens */
+    --cocoa: 20 30% 28%; /* #5C4033 */
+    --clay: 20 35% 42%; /* #8B6B4D */
+    --dusty-rose: 0 25% 85%; /* #E8C4C4 */
+    --sage: 100 20% 70%; /* #A7C4A0 */
+    --peach: 25 45% 88%; /* #F5D9C4 */
+    --sky: 210 25% 85%; /* #C4D4E8 */
+    --glass: 35 35% 98%;
+    --glass-border: 30 18% 85%;
+    --glow: 100 20% 60%;
+    --gold: 25 45% 70%;
 
-    --sidebar-background: 40 33% 98%;
-    --sidebar-foreground: 218 17% 27%;
-    --sidebar-primary: 160 84% 39%;
+    --sidebar-background: 35 25% 96%;
+    --sidebar-foreground: 20 35% 18%;
+    --sidebar-primary: 100 20% 60%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 40 20% 94%;
-    --sidebar-accent-foreground: 218 17% 27%;
-    --sidebar-border: 40 15% 88%;
-    --sidebar-ring: 160 84% 39%;
+    --sidebar-accent: 35 20% 92%;
+    --sidebar-accent-foreground: 20 35% 18%;
+    --sidebar-border: 30 18% 85%;
+    --sidebar-ring: 100 20% 60%;
   }
 }
 
@@ -63,7 +67,11 @@
 
   body {
     @apply bg-background text-foreground font-sans antialiased;
-    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', system-ui, sans-serif;
+    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Fraunces', Georgia, serif;
   }
 
   /* Custom scrollbar */
@@ -86,6 +94,13 @@
 }
 
 @layer utilities {
+  /* Grain texture overlay */
+  .grain-overlay {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    opacity: 0.03;
+    pointer-events: none;
+  }
+
   /* Card styling */
   .glass {
     @apply bg-card shadow-sm border border-border;
@@ -110,15 +125,16 @@
 
   /* Text gradient */
   .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent;
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-cocoa to-clay;
   }
 
   /* Gradient backgrounds */
   .gradient-mesh {
     background: 
-      radial-gradient(at 20% 80%, hsl(160 84% 39% / 0.06) 0%, transparent 50%),
-      radial-gradient(at 80% 20%, hsl(38 92% 50% / 0.05) 0%, transparent 50%),
-      linear-gradient(180deg, hsl(40 33% 98%) 0%, hsl(40 20% 96%) 100%);
+      radial-gradient(at 20% 80%, hsl(100 20% 70% / 0.08) 0%, transparent 50%),
+      radial-gradient(at 80% 20%, hsl(0 25% 85% / 0.08) 0%, transparent 50%),
+      radial-gradient(at 50% 50%, hsl(25 45% 88% / 0.1) 0%, transparent 60%),
+      linear-gradient(180deg, hsl(35 25% 94%) 0%, hsl(30 18% 90%) 100%);
   }
 
   .gradient-radial {
@@ -133,8 +149,8 @@
   .card-lift:hover {
     @apply -translate-y-1;
     box-shadow: 
-      0 20px 40px -15px hsl(220 9% 46% / 0.15),
-      0 8px 16px -8px hsl(220 9% 46% / 0.1);
+      0 20px 40px -15px hsl(20 30% 28% / 0.12),
+      0 8px 16px -8px hsl(20 30% 28% / 0.08);
   }
 }
 
@@ -142,7 +158,7 @@
   /* Button variants */
   .btn-primary {
     @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full 
-           bg-primary text-primary-foreground font-medium
+           bg-primary text-foreground font-medium
            transition-all duration-200 ease-out
            hover:opacity-90 hover:scale-[1.02] active:scale-[0.98]
            shadow-sm hover:shadow-md;
@@ -165,7 +181,7 @@
   /* Card component */
   .agent-card {
     @apply bg-card rounded-2xl p-6 card-lift cursor-pointer border border-border
-           hover:border-primary/30;
+           hover:border-sage/50;
   }
 
   /* Badge */
@@ -175,14 +191,22 @@
   }
 
   .badge-primary {
-    @apply bg-primary/10 text-primary;
+    @apply bg-sage/20 text-cocoa;
+  }
+
+  .badge-rose {
+    @apply bg-dusty-rose/30 text-cocoa;
+  }
+
+  .badge-peach {
+    @apply bg-peach/40 text-cocoa;
   }
 
   /* Input */
   .input-search {
     @apply w-full px-4 py-3 rounded-xl bg-muted text-foreground border border-border
            placeholder:text-muted-foreground
-           focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/50
+           focus:outline-none focus:ring-2 focus:ring-sage/30 focus:border-sage/50
            transition-all duration-200;
   }
 }

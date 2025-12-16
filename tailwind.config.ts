@@ -14,7 +14,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        outfit: ['Outfit', 'sans-serif'],
+        sans: ['DM Sans', 'system-ui', 'sans-serif'],
+        display: ['Fraunces', 'Georgia', 'serif'],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -25,6 +26,13 @@ export default {
         glass: "hsl(var(--glass))",
         "glass-border": "hsl(var(--glass-border))",
         glow: "hsl(var(--glow))",
+        // Custom premium palette
+        cocoa: "hsl(var(--cocoa))",
+        clay: "hsl(var(--clay))",
+        "dusty-rose": "hsl(var(--dusty-rose))",
+        sage: "hsl(var(--sage))",
+        peach: "hsl(var(--peach))",
+        sky: "hsl(var(--sky))",
         gold: "hsl(var(--gold))",
         primary: {
           DEFAULT: "hsl(var(--primary))",
