@@ -58,7 +58,7 @@ const Index = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-background noise">
+    <div className="min-h-screen bg-background">
       {/* Navigation - appears on scroll */}
       <Navbar
         visible={showNavbar}
