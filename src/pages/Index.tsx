@@ -75,7 +75,7 @@ const Index = () => {
       <footer className="py-12 px-6 border-t border-border/50">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2 text-muted-foreground">
-            <div className="w-6 h-6 rounded bg-primary flex items-center justify-center">
+            <div className="w-6 h-6 rounded bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center">
               <span className="text-primary-foreground text-xs font-bold">A</span>
             </div>
             <span className="text-sm">© 2024 AgentHub. All rights reserved.</span>

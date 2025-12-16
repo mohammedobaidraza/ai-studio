@@ -13,7 +13,7 @@ const Hero = ({ onExplore }: HeroProps) => {
       
       {/* Soft floating orbs */}
       <motion.div
-        className="absolute top-1/3 left-1/4 w-[500px] h-[500px] rounded-full bg-primary/5 blur-3xl"
+        className="absolute top-1/3 left-1/4 w-[500px] h-[500px] rounded-full bg-primary/10 blur-3xl"
         animate={{
           x: [0, 30, 0],
           y: [0, 20, 0],
@@ -25,7 +25,7 @@ const Hero = ({ onExplore }: HeroProps) => {
         }}
       />
       <motion.div
-        className="absolute bottom-1/3 right-1/4 w-[400px] h-[400px] rounded-full bg-accent/5 blur-3xl"
+        className="absolute bottom-1/3 right-1/4 w-[400px] h-[400px] rounded-full bg-gold/10 blur-3xl"
         animate={{
           x: [0, -20, 0],
           y: [0, -15, 0],
@@ -45,8 +45,8 @@ const Hero = ({ onExplore }: HeroProps) => {
           transition={{ duration: 0.6 }}
           className="mb-8"
         >
-          <span className="badge badge-primary inline-flex items-center gap-2">
-            <Sparkles className="w-3 h-3" />
+          <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-medium bg-primary/10 text-primary">
+            <Sparkles className="w-3.5 h-3.5" />
             The Future of AI Agents
           </span>
         </motion.div>
