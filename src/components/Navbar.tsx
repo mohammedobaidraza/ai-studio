@@ -17,7 +17,7 @@ const Navbar = ({ visible, onCommandOpen }: NavbarProps) => {
       transition={{ duration: 0.3, ease: "easeOut" }}
       className="fixed top-0 left-0 right-0 z-50 px-6 py-4"
     >
-      <nav className="max-w-7xl mx-auto glass rounded-2xl px-6 py-3 flex items-center justify-between">
+      <nav className="max-w-7xl mx-auto bg-card/80 backdrop-blur-lg rounded-2xl px-6 py-3 flex items-center justify-between border border-border shadow-sm">
         {/* Logo */}
         <a href="/" className="flex items-center gap-2 text-foreground font-semibold text-lg">
           <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
@@ -28,13 +28,13 @@ const Navbar = ({ visible, onCommandOpen }: NavbarProps) => {
 
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-8">
-          <a href="#" className="text-muted-foreground hover:text-foreground transition-colors text-sm">
+          <a href="#" className="text-muted-foreground hover:text-foreground transition-colors text-sm font-medium">
             Browse
           </a>
-          <a href="#" className="text-muted-foreground hover:text-foreground transition-colors text-sm">
+          <a href="#" className="text-muted-foreground hover:text-foreground transition-colors text-sm font-medium">
             Categories
           </a>
-          <a href="#" className="text-muted-foreground hover:text-foreground transition-colors text-sm">
+          <a href="#" className="text-muted-foreground hover:text-foreground transition-colors text-sm font-medium">
             Developers
           </a>
         </div>
@@ -43,11 +43,11 @@ const Navbar = ({ visible, onCommandOpen }: NavbarProps) => {
         <div className="flex items-center gap-3">
           <button
             onClick={onCommandOpen}
-            className="hidden sm:flex items-center gap-2 px-3 py-2 rounded-lg bg-muted/50 text-muted-foreground text-sm hover:bg-muted hover:text-foreground transition-all"
+            className="hidden sm:flex items-center gap-2 px-3 py-2 rounded-lg bg-muted text-muted-foreground text-sm hover:bg-muted/80 hover:text-foreground transition-all"
           >
             <Command className="w-3 h-3" />
             <span>Search</span>
-            <kbd className="px-1.5 py-0.5 rounded bg-background/50 text-xs">⌘K</kbd>
+            <kbd className="px-1.5 py-0.5 rounded bg-background text-xs border border-border">⌘K</kbd>
           </button>
           <button className="btn-primary text-sm py-2 px-4">
             Sign In
@@ -66,21 +66,21 @@ const Navbar = ({ visible, onCommandOpen }: NavbarProps) => {
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="md:hidden mt-2 mx-auto max-w-7xl glass rounded-xl p-4"
+          className="md:hidden mt-2 mx-auto max-w-7xl bg-card rounded-xl p-4 border border-border shadow-lg"
         >
           <div className="flex flex-col gap-2">
-            <a href="#" className="px-4 py-2 rounded-lg hover:bg-muted/50 text-muted-foreground hover:text-foreground transition-colors">
+            <a href="#" className="px-4 py-2 rounded-lg hover:bg-muted text-muted-foreground hover:text-foreground transition-colors">
               Browse
             </a>
-            <a href="#" className="px-4 py-2 rounded-lg hover:bg-muted/50 text-muted-foreground hover:text-foreground transition-colors">
+            <a href="#" className="px-4 py-2 rounded-lg hover:bg-muted text-muted-foreground hover:text-foreground transition-colors">
               Categories
             </a>
-            <a href="#" className="px-4 py-2 rounded-lg hover:bg-muted/50 text-muted-foreground hover:text-foreground transition-colors">
+            <a href="#" className="px-4 py-2 rounded-lg hover:bg-muted text-muted-foreground hover:text-foreground transition-colors">
               Developers
             </a>
             <button
               onClick={onCommandOpen}
-              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-muted/50 text-muted-foreground"
+              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-muted text-muted-foreground"
             >
               <Command className="w-4 h-4" />
               Search agents...

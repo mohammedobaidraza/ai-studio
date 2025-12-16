@@ -63,7 +63,7 @@ const CommandPalette = ({ isOpen, onClose, onAgentSelect }: CommandPaletteProps)
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50"
+            className="fixed inset-0 bg-foreground/20 backdrop-blur-sm z-50"
             onClick={onClose}
           />
 
@@ -75,7 +75,7 @@ const CommandPalette = ({ isOpen, onClose, onAgentSelect }: CommandPaletteProps)
             transition={{ duration: 0.2, ease: "easeOut" }}
             className="fixed top-[20%] left-1/2 -translate-x-1/2 w-full max-w-2xl mx-auto px-4 z-50"
           >
-            <div className="glass rounded-2xl shadow-2xl overflow-hidden">
+            <div className="bg-card rounded-2xl shadow-2xl overflow-hidden border border-border">
               {/* Search Input */}
               <div className="flex items-center gap-3 px-4 py-4 border-b border-border/50">
                 <Search className="w-5 h-5 text-muted-foreground" />

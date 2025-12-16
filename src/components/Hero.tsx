@@ -8,32 +8,30 @@ interface HeroProps {
 const Hero = ({ onExplore }: HeroProps) => {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Animated gradient mesh background */}
+      {/* Light gradient background */}
       <div className="absolute inset-0 gradient-mesh" />
       
-      {/* Animated orbs */}
+      {/* Soft floating orbs */}
       <motion.div
-        className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-primary/10 blur-3xl"
+        className="absolute top-1/3 left-1/4 w-[500px] h-[500px] rounded-full bg-primary/5 blur-3xl"
         animate={{
-          x: [0, 50, 0],
-          y: [0, 30, 0],
-          scale: [1, 1.1, 1],
+          x: [0, 30, 0],
+          y: [0, 20, 0],
         }}
         transition={{
-          duration: 8,
+          duration: 10,
           repeat: Infinity,
           ease: "easeInOut",
         }}
       />
       <motion.div
-        className="absolute bottom-1/4 right-1/4 w-80 h-80 rounded-full bg-accent/10 blur-3xl"
+        className="absolute bottom-1/3 right-1/4 w-[400px] h-[400px] rounded-full bg-accent/5 blur-3xl"
         animate={{
-          x: [0, -40, 0],
-          y: [0, -20, 0],
-          scale: [1, 1.15, 1],
+          x: [0, -20, 0],
+          y: [0, -15, 0],
         }}
         transition={{
-          duration: 10,
+          duration: 12,
           repeat: Infinity,
           ease: "easeInOut",
         }}
@@ -57,7 +55,7 @@ const Hero = ({ onExplore }: HeroProps) => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.1 }}
-          className="text-5xl md:text-7xl lg:text-8xl font-semibold tracking-tight mb-6"
+          className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-6 text-foreground"
         >
           Discover.{" "}
           <span className="text-gradient">Launch.</span>

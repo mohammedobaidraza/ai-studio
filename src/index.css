@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,52 +6,52 @@
 
 @layer base {
   :root {
-    /* Dark futuristic palette - default */
-    --background: 220 20% 6%;
-    --foreground: 210 20% 95%;
+    /* Light App Store inspired palette */
+    --background: 0 0% 98%;
+    --foreground: 0 0% 9%;
 
-    --card: 220 20% 9%;
-    --card-foreground: 210 20% 95%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 9%;
 
-    --popover: 220 20% 8%;
-    --popover-foreground: 210 20% 95%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 9%;
 
-    --primary: 175 80% 50%;
-    --primary-foreground: 220 20% 6%;
+    --primary: 211 100% 50%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 220 20% 14%;
-    --secondary-foreground: 210 20% 90%;
+    --secondary: 220 14% 96%;
+    --secondary-foreground: 0 0% 9%;
 
-    --muted: 220 15% 16%;
-    --muted-foreground: 215 15% 55%;
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 9% 46%;
 
-    --accent: 175 70% 45%;
-    --accent-foreground: 220 20% 6%;
+    --accent: 211 100% 50%;
+    --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 72% 55%;
-    --destructive-foreground: 210 20% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 220 15% 18%;
-    --input: 220 15% 18%;
-    --ring: 175 80% 50%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 211 100% 50%;
 
     --radius: 1rem;
 
     /* Custom tokens */
-    --glass: 220 20% 12%;
-    --glass-border: 220 15% 22%;
-    --glow: 175 80% 50%;
-    --gradient-start: 175 80% 50%;
-    --gradient-end: 200 90% 60%;
+    --glass: 0 0% 100%;
+    --glass-border: 220 13% 91%;
+    --glow: 211 100% 50%;
+    --gradient-start: 211 100% 50%;
+    --gradient-end: 199 89% 48%;
 
-    --sidebar-background: 220 20% 8%;
-    --sidebar-foreground: 210 20% 95%;
-    --sidebar-primary: 175 80% 50%;
-    --sidebar-primary-foreground: 220 20% 6%;
-    --sidebar-accent: 220 20% 14%;
-    --sidebar-accent-foreground: 210 20% 90%;
-    --sidebar-border: 220 15% 18%;
-    --sidebar-ring: 175 80% 50%;
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 0 0% 9%;
+    --sidebar-primary: 211 100% 50%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 220 14% 96%;
+    --sidebar-accent-foreground: 0 0% 9%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 211 100% 50%;
   }
 }
 
@@ -61,13 +61,14 @@
   }
 
   body {
-    @apply bg-background text-foreground font-outfit antialiased;
+    @apply bg-background text-foreground font-sans antialiased;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', system-ui, sans-serif;
   }
 
   /* Custom scrollbar */
   ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
+    width: 8px;
+    height: 8px;
   }
 
   ::-webkit-scrollbar-track {
@@ -75,7 +76,7 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    @apply bg-muted rounded-full;
+    @apply bg-muted-foreground/20 rounded-full;
   }
 
   ::-webkit-scrollbar-thumb:hover {
@@ -84,26 +85,26 @@
 }
 
 @layer utilities {
-  /* Glassmorphism */
+  /* Card styling */
   .glass {
-    @apply bg-glass/60 backdrop-blur-xl border border-glass-border/50;
+    @apply bg-card shadow-sm border border-border;
   }
 
   .glass-subtle {
-    @apply bg-glass/40 backdrop-blur-md border border-glass-border/30;
+    @apply bg-muted/50 border border-border/50;
   }
 
   /* Glow effects */
   .glow {
-    box-shadow: 0 0 30px -5px hsl(var(--glow) / 0.3);
+    box-shadow: 0 4px 20px -2px hsl(var(--glow) / 0.25);
   }
 
   .glow-sm {
-    box-shadow: 0 0 20px -5px hsl(var(--glow) / 0.2);
+    box-shadow: 0 2px 12px -2px hsl(var(--glow) / 0.2);
   }
 
   .glow-lg {
-    box-shadow: 0 0 60px -10px hsl(var(--glow) / 0.4);
+    box-shadow: 0 8px 30px -4px hsl(var(--glow) / 0.3);
   }
 
   /* Text gradient */
@@ -114,13 +115,13 @@
   /* Gradient backgrounds */
   .gradient-mesh {
     background: 
-      radial-gradient(at 20% 30%, hsl(var(--glow) / 0.15) 0%, transparent 50%),
-      radial-gradient(at 80% 70%, hsl(var(--gradient-end) / 0.1) 0%, transparent 50%),
-      radial-gradient(at 50% 50%, hsl(220 20% 8%) 0%, hsl(var(--background)) 100%);
+      radial-gradient(at 20% 80%, hsl(var(--glow) / 0.08) 0%, transparent 50%),
+      radial-gradient(at 80% 20%, hsl(var(--gradient-end) / 0.06) 0%, transparent 50%),
+      linear-gradient(180deg, hsl(var(--background)) 0%, hsl(220 14% 96%) 100%);
   }
 
   .gradient-radial {
-    background: radial-gradient(circle at center, hsl(var(--glow) / 0.1) 0%, transparent 70%);
+    background: radial-gradient(circle at center, hsl(var(--glow) / 0.05) 0%, transparent 70%);
   }
 
   /* Card lift effect */
@@ -129,25 +130,10 @@
   }
 
   .card-lift:hover {
-    @apply -translate-y-2;
+    @apply -translate-y-1;
     box-shadow: 
-      0 20px 40px -15px hsl(var(--glow) / 0.15),
-      0 10px 20px -10px hsl(220 20% 0% / 0.4);
-  }
-
-  /* Noise texture overlay */
-  .noise {
-    position: relative;
-  }
-
-  .noise::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-    opacity: 0.03;
-    pointer-events: none;
-    z-index: 1;
+      0 20px 40px -15px hsl(220 9% 46% / 0.15),
+      0 8px 16px -8px hsl(220 9% 46% / 0.1);
   }
 }
 
@@ -157,26 +143,27 @@
     @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full 
            bg-primary text-primary-foreground font-medium
            transition-all duration-200 ease-out
-           hover:glow hover:scale-[1.02] active:scale-[0.98];
+           hover:opacity-90 hover:scale-[1.02] active:scale-[0.98]
+           shadow-sm hover:shadow-md;
   }
 
   .btn-secondary {
     @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full 
-           glass text-foreground font-medium
+           bg-secondary text-secondary-foreground font-medium border border-border
            transition-all duration-200 ease-out
-           hover:bg-glass/80 hover:border-primary/30 active:scale-[0.98];
+           hover:bg-muted active:scale-[0.98];
   }
 
   .btn-ghost {
     @apply inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg
            text-muted-foreground font-medium
            transition-all duration-200 ease-out
-           hover:text-foreground hover:bg-muted/50;
+           hover:text-foreground hover:bg-muted;
   }
 
   /* Card component */
   .agent-card {
-    @apply glass rounded-2xl p-6 card-lift cursor-pointer
+    @apply bg-card rounded-2xl p-6 card-lift cursor-pointer border border-border
            hover:border-primary/30;
   }
 
@@ -192,9 +179,9 @@
 
   /* Input */
   .input-search {
-    @apply w-full px-4 py-3 rounded-xl glass text-foreground
+    @apply w-full px-4 py-3 rounded-xl bg-muted text-foreground border border-border
            placeholder:text-muted-foreground
-           focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50
+           focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/50
            transition-all duration-200;
   }
 }

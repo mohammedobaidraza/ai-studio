@@ -79,7 +79,7 @@ const LaunchPanel = ({ agent, isOpen, onClose }: LaunchPanelProps) => {
           animate={{ x: 0, opacity: 1 }}
           exit={{ x: "100%", opacity: 0 }}
           transition={{ duration: 0.4, ease: [0.32, 0.72, 0, 1] }}
-          className="fixed inset-y-0 right-0 w-full md:w-[480px] lg:w-[540px] z-50 glass border-l border-border/50 flex flex-col"
+          className="fixed inset-y-0 right-0 w-full md:w-[480px] lg:w-[540px] z-50 bg-card border-l border-border flex flex-col shadow-2xl"
         >
           {/* Header */}
           <div className="flex items-center justify-between p-4 border-b border-border/50">
@@ -121,7 +121,7 @@ const LaunchPanel = ({ agent, isOpen, onClose }: LaunchPanelProps) => {
                   className={`max-w-[80%] px-4 py-3 rounded-2xl ${
                     message.role === "user"
                       ? "bg-primary text-primary-foreground rounded-br-sm"
-                      : "glass-subtle rounded-bl-sm"
+                      : "bg-muted rounded-bl-sm"
                   }`}
                 >
                   <p className="text-sm leading-relaxed">{message.content}</p>
@@ -143,7 +143,7 @@ const LaunchPanel = ({ agent, isOpen, onClose }: LaunchPanelProps) => {
                 <div className="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center shrink-0">
                   <Bot className="w-4 h-4 text-primary" />
                 </div>
-                <div className="glass-subtle rounded-2xl rounded-bl-sm px-4 py-3">
+                <div className="bg-muted rounded-2xl rounded-bl-sm px-4 py-3">
                   <div className="flex items-center gap-2">
                     <Loader2 className="w-4 h-4 text-primary animate-spin" />
                     <span className="text-sm text-muted-foreground">Thinking...</span>
@@ -157,7 +157,7 @@ const LaunchPanel = ({ agent, isOpen, onClose }: LaunchPanelProps) => {
 
           {/* Input */}
           <div className="p-4 border-t border-border/50">
-            <div className="flex items-center gap-3 p-2 glass rounded-xl">
+            <div className="flex items-center gap-3 p-2 bg-muted rounded-xl border border-border">
               <input
                 type="text"
                 value={input}

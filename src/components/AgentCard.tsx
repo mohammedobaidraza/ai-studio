@@ -27,15 +27,15 @@ const AgentCard = ({ agent, index, onClick }: AgentCardProps) => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
       onClick={onClick}
-      className="agent-card group"
+      className="agent-card group relative"
     >
       {/* Icon */}
-      <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary/20 to-accent/10 flex items-center justify-center mb-4 group-hover:glow-sm transition-all duration-300">
+      <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary/10 to-accent/5 flex items-center justify-center mb-4 group-hover:scale-105 transition-transform duration-300">
         <IconComponent className="w-7 h-7 text-primary" />
       </div>
 
       {/* Content */}
-      <h3 className="text-lg font-semibold text-foreground mb-2 group-hover:text-gradient transition-all">
+      <h3 className="text-lg font-semibold text-foreground mb-2">
         {agent.name}
       </h3>
       <p className="text-sm text-muted-foreground line-clamp-2 mb-4">
@@ -52,7 +52,7 @@ const AgentCard = ({ agent, index, onClick }: AgentCardProps) => {
       </div>
 
       {/* Footer */}
-      <div className="flex items-center justify-between pt-4 border-t border-border/50">
+      <div className="flex items-center justify-between pt-4 border-t border-border">
         <div className="flex items-center gap-2">
           {agent.verified && (
             <span className="badge badge-primary text-xs flex items-center gap-1">
@@ -64,11 +64,6 @@ const AgentCard = ({ agent, index, onClick }: AgentCardProps) => {
         <span className="text-xs text-muted-foreground">
           {agent.usageCount.toLocaleString()} uses
         </span>
-      </div>
-
-      {/* Hover glow effect */}
-      <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-        <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary/5 to-transparent" />
       </div>
     </motion.div>
   );
