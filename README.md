@@ -1,73 +1,112 @@
-# Welcome to your Lovable project
+# 🧠 Agent Store  
+*A home for useful, human-first AI agents*
 
-## Project info
+---
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+## Why Agent Store exists
 
-## How can I edit this code?
+AI agents are everywhere right now.
 
-There are several ways of editing your application.
+But most of them feel like:
+- demos that never shipped  
+- tools nobody actually uses  
+- abstractions nobody explains  
 
-**Use Lovable**
+**Agent Store exists to fix that.**
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+This is a curated place for **real, practical AI agents** — built by humans, for humans — that solve actual problems.  
+No hype. No fluff. Just agents that *do things*.
 
-Changes made via Lovable will be committed automatically to this repo.
+---
 
-**Use your preferred IDE**
+## What is Agent Store?
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+Agent Store is a growing collection of AI agents you can:
+- explore
+- understand
+- reuse
+- extend
+- deploy
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+Each agent is designed to be:
+- **purpose-driven**
+- **well-documented**
+- **easy to plug into real workflows**
 
-Follow these steps:
+Think of it as:
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+> GitHub + App Store vibes, but for AI agents 🤖
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+---
 
-# Step 3: Install the necessary dependencies.
-npm i
+## What makes this different?
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+Most AI repos answer **“what can AI do?”**  
+Agent Store answers **“how do I actually use this?”**
 
-**Edit a file directly in GitHub**
+Every agent here aims to:
+- solve one clear problem
+- explain *why* it exists
+- show *how* it works
+- be usable without a PhD in prompt engineering
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+---
 
-**Use GitHub Codespaces**
+## What you’ll find here
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+Agents may vary, but you’ll commonly see:
+- 🔍 Research & analysis agents  
+- 🛡️ Security & threat-detection agents  
+- 📄 RAG / document intelligence agents  
+- 🧠 Reasoning & decision-support agents  
+- ⚙️ Automation & workflow agents  
 
-## What technologies are used for this project?
+Each agent lives in its own space with:
+- clear intent
+- setup instructions
+- usage examples
+- extension ideas
 
-This project is built with:
+---
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## Who this is for
 
-## How can I deploy this project?
+If you are:
+- a **developer** building AI-powered systems
+- a **student** learning how agents actually work
+- a **researcher** prototyping ideas fast
+- a **builder** who wants usable tools, not demos
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+You’re in the right place.
 
-## Can I connect a custom domain to my Lovable project?
+---
 
-Yes, you can!
+## Design philosophy
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+Agent Store follows a few simple principles:
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+### 1. Humans first  
+Agents should feel understandable, not magical.
+
+### 2. Small > complicated  
+One agent, one job. Clear scope.
+
+### 3. Transparency over hype  
+If something is experimental, we say so.
+
+### 4. Built to extend  
+Agents should be easy to remix, not locked boxes.
+
+---
+
+## Repository structure
+
+While agents may differ, most follow a simple pattern:
+
+```text
+agent-name/
+├── README.md        # What it does, why it exists
+├── src/             # Core logic
+├── prompts/         # System & task prompts
+├── config/          # Settings, models, keys
+└── examples/        # Real usage examples
