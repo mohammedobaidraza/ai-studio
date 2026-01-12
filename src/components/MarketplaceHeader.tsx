@@ -1,5 +1,4 @@
-import { Search, Bell, MessageCircle, Menu, Plus } from "lucide-react";
-import Logo from "../assets/logo.svg";
+import { Bell, MessageCircle, Menu, Plus } from "lucide-react";
 
 interface MarketplaceHeaderProps {
   onMenuClick: () => void;
@@ -19,27 +18,26 @@ const MarketplaceHeader = ({ onMenuClick }: MarketplaceHeaderProps) => {
         </button>
 
         <div className="flex items-center gap-2">
-          {/* Custom Logo */}
+          {/* Logo */}
           <div className="w-10 h-10 flex items-center justify-center">
             <img
-              src={Logo}
-              alt="Agent Store Logo"
+              src="/logo.svg"
+              alt="AgentAI Logo"
               className="w-8 h-8"
             />
           </div>
 
           <span className="text-xl font-bold text-blue-600 hidden sm:block">
-            Agent Store
+            AgentAI
           </span>
         </div>
       </div>
 
-      {/* CENTER — Search Bar */}
+      {/* CENTER — Search */}
       <div className="hidden md:flex flex-1 max-w-xl mx-4">
         <div className="relative w-full">
-          {/* Logo inside search */}
           <img
-            src={Logo}
+            src="/logo.svg"
             alt="Search Logo"
             className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 opacity-70"
           />
@@ -70,14 +68,6 @@ const MarketplaceHeader = ({ onMenuClick }: MarketplaceHeaderProps) => {
         <button className="p-2.5 hover:bg-gray-100 rounded-full relative">
           <Bell className="w-6 h-6 text-gray-600" />
           <span className="absolute top-1 right-1 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white" />
-        </button>
-
-        <button className="w-10 h-10 rounded-full bg-gray-300 overflow-hidden ml-1">
-          <img
-            src="https://api.dicebear.com/7.x/avataaars/svg?seed=user"
-            alt="Profile"
-            className="w-full h-full object-cover"
-          />
         </button>
       </div>
     </header>
