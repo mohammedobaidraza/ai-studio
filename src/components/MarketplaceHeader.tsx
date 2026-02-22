@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Bell, MessageCircle, Menu, Plus, Search, Command } from "lucide-react";
 import huggingfaceLogo from "@/assets/logos/huggingface.svg";
+import agentStoreLogo from "@/assets/logos/agentstore.png";
 import PublishAgentModal from "./PublishAgentModal";
 
 interface MarketplaceHeaderProps {
@@ -25,7 +26,7 @@ const MarketplaceHeader = ({ onMenuClick }: MarketplaceHeaderProps) => {
 
           <div className="flex items-center gap-2.5">
             <div className="w-8 h-8 rounded-lg flex items-center justify-center overflow-hidden">
-              <img src="/logo.svg" alt="Agent Store" className="w-8 h-8 object-contain" />
+              <img src={agentStoreLogo} alt="Agent Store" className="w-8 h-8 object-contain" />
             </div>
             <div className="hidden sm:flex items-center gap-1.5">
               <span className="text-[15px] font-bold text-gray-900 tracking-tight">
