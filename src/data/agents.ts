@@ -25,6 +25,9 @@ import mistralLogo from "@/assets/logos/mistral.ico";
 import poeLogo from "@/assets/logos/poe.png";
 import huggingfaceLogo from "@/assets/logos/huggingface.svg";
 import cohereLogo from "@/assets/logos/cohere.ico";
+import groqLogo from "@/assets/logos/groq.ico";
+import deepseekLogo from "@/assets/logos/deepseek.ico";
+import characteraiLogo from "@/assets/logos/characterai.ico";
 
 export const agents: Agent[] = [
   {
@@ -266,7 +269,7 @@ export const agents: Agent[] = [
     name: "Groq",
     description: "Lightning-fast AI inference for instant responses",
     longDescription: "Groq offers the fastest AI inference with their custom LPU hardware. Get instant responses from models like Llama and Mixtral with unprecedented speed.",
-    icon: "Zap",
+    logo: groqLogo,
     tags: ["Fast", "Inference", "Open Models"],
     verified: true,
     usageCount: 8000000,
@@ -291,7 +294,7 @@ export const agents: Agent[] = [
     name: "DeepSeek",
     description: "Advanced reasoning and coding AI from China",
     longDescription: "DeepSeek offers powerful AI models with exceptional coding and reasoning capabilities. Their Chat interface provides access to their latest models for free.",
-    icon: "Brain",
+    logo: deepseekLogo,
     tags: ["Coding", "Reasoning", "Research"],
     verified: true,
     usageCount: 12000000,
@@ -316,7 +319,7 @@ export const agents: Agent[] = [
     name: "Character.AI",
     description: "Chat with AI characters and create your own",
     longDescription: "Character.AI lets you create and chat with AI characters. From historical figures to fictional characters, engage in creative conversations and roleplay.",
-    icon: "MessageSquare",
+    logo: characteraiLogo,
     tags: ["Characters", "Creative", "Roleplay"],
     verified: true,
     usageCount: 40000000,
