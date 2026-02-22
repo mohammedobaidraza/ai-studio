@@ -1,4 +1,4 @@
-import { Bell, MessageCircle, Menu, Plus } from "lucide-react";
+import { Bell, MessageCircle, Menu, Plus, Search } from "lucide-react";
 import huggingfaceLogo from "@/assets/logos/huggingface.svg";
 
 interface MarketplaceHeaderProps {
@@ -31,15 +31,11 @@ const MarketplaceHeader = ({ onMenuClick }: MarketplaceHeaderProps) => {
       {/* CENTER — Search */}
       <div className="hidden md:flex flex-1 max-w-xl mx-6">
         <div className="relative w-full">
-          <img
-            src="/logo.svg"
-            alt="Search"
-            className="absolute left-4 top-1/2 -translate-y-1/2 w-4.5 h-4.5 opacity-50"
-          />
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
           <input
             type="text"
             placeholder="Search agents, models, tools..."
-            className="w-full pl-12 pr-4 py-2.5 bg-gray-50 rounded-xl text-sm
+            className="w-full pl-11 pr-4 py-2.5 bg-gray-50 rounded-xl text-sm
               focus:outline-none focus:ring-2 focus:ring-blue-500/20
               focus:bg-white border border-gray-200 focus:border-blue-400
               placeholder:text-gray-400 transition-all"
