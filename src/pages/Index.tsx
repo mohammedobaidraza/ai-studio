@@ -33,7 +33,7 @@ const Index = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-[#f8f8f7]">
       {/* Header */}
       <MarketplaceHeader onMenuClick={() => setMobileMenuOpen(true)} />
 
@@ -53,18 +53,18 @@ const Index = () => {
         />
 
         {/* Main Content */}
-        <main className="flex-1 p-5 lg:p-8">
+        <main className="flex-1 p-5 lg:p-7">
           {/* Title Bar */}
-          <div className="mb-6 flex items-center justify-between">
+          <div className="mb-5 flex items-center justify-between">
             <div>
-              <h2 className="text-2xl font-bold text-gray-900 tracking-tight">
-                {selectedCategory ? `${selectedCategory} Agents` : "Today's picks"}
+              <h2 className="text-[22px] font-bold text-gray-900 tracking-tight">
+                {selectedCategory ? `${selectedCategory}` : "Today's picks"}
               </h2>
-              <p className="text-sm text-gray-400 mt-0.5">
+              <p className="text-[13px] text-gray-400 mt-0.5">
                 {filteredAgents.length} agents available
               </p>
             </div>
-            <select className="px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-400 text-gray-600 transition-all">
+            <select className="px-3 py-2 bg-white border border-black/[0.06] rounded-lg text-[13px] focus:outline-none focus:ring-1 focus:ring-black/[0.08] text-gray-600 transition-all appearance-none pr-8 cursor-pointer hover:border-black/[0.12]">
               <option>Most Popular</option>
               <option>Highest Rated</option>
               <option>Newest</option>
@@ -73,7 +73,7 @@ const Index = () => {
           </div>
 
           {/* Agent Grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4 lg:gap-5">
+          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4">
             {filteredAgents.map((agent) => (
               <MarketplaceCard
                 key={agent.id}
@@ -85,13 +85,13 @@ const Index = () => {
 
           {/* Empty State */}
           {filteredAgents.length === 0 && (
-            <div className="text-center py-16">
-              <p className="text-gray-500 text-lg">No agents found in this category</p>
+            <div className="text-center py-20">
+              <p className="text-gray-400 text-base">No agents found in this category</p>
               <button 
                 onClick={() => setSelectedCategory(null)}
-                className="mt-4 text-blue-600 hover:underline"
+                className="mt-3 text-[13px] font-medium text-gray-900 hover:text-gray-600 transition-colors"
               >
-                Browse all agents
+                ← Browse all agents
               </button>
             </div>
           )}
