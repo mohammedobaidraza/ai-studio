@@ -82,17 +82,6 @@ const MarketplaceCard = ({ agent, onClick }: MarketplaceCardProps) => {
           </span>
         </div>
 
-        {/* Tags */}
-        <div className="flex flex-wrap gap-1.5 mt-3 pt-3 border-t border-gray-50">
-          {agent.tags.slice(0, 2).map((tag) => (
-            <span 
-              key={tag}
-              className="text-[11px] text-gray-500 bg-gray-50 px-2 py-0.5 rounded-md font-medium"
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
       </div>
     </div>
   );
