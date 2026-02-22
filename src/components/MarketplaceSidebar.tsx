@@ -1,6 +1,6 @@
 import { 
   MessageSquare, Brain, Search, Code, Sparkles, Users, 
-  Zap, Globe, FileText, Image, ChevronRight, MapPin
+  Zap, Globe, FileText, Image, ChevronRight, TrendingUp
 } from "lucide-react";
 
 interface MarketplaceSidebarProps {
@@ -23,37 +23,29 @@ const categories = [
 
 const MarketplaceSidebar = ({ selectedCategory, onCategorySelect }: MarketplaceSidebarProps) => {
   return (
-    <aside className="w-[360px] h-[calc(100vh-56px)] bg-white border-r border-gray-200 overflow-y-auto sticky top-14 hidden lg:block">
-      <div className="p-4">
-        <h1 className="text-2xl font-bold text-gray-900 mb-4">Marketplace</h1>
+    <aside className="w-[300px] h-[calc(100vh-64px)] bg-white border-r border-gray-100 overflow-y-auto sticky top-16 hidden lg:block">
+      <div className="p-5">
+        <h1 className="text-xl font-bold text-gray-900 mb-1">Marketplace</h1>
+        <p className="text-xs text-gray-400 mb-5">Discover & deploy AI agents</p>
         
         {/* Search Box */}
-        <div className="relative mb-4">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
+        <div className="relative mb-5">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
           <input
             type="text"
-            placeholder="Search Marketplace"
-            className="w-full pl-10 pr-4 py-2 bg-gray-100 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white border border-transparent focus:border-blue-500"
+            placeholder="Search categories..."
+            className="w-full pl-10 pr-4 py-2.5 bg-gray-50 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:bg-white border border-gray-100 focus:border-blue-400 placeholder:text-gray-400 transition-all"
           />
         </div>
 
-        {/* Location */}
-        <button className="flex items-center gap-2 w-full p-3 rounded-lg hover:bg-gray-100 text-left mb-2">
-          <div className="w-9 h-9 rounded-full bg-gray-200 flex items-center justify-center">
-            <MapPin className="w-5 h-5 text-gray-600" />
-          </div>
-          <div className="flex-1">
-            <span className="text-sm font-medium text-gray-900">Your location</span>
-            <p className="text-xs text-gray-500">Worldwide</p>
-          </div>
-          <ChevronRight className="w-5 h-5 text-gray-400" />
-        </button>
-
-        <hr className="my-3 border-gray-200" />
+        {/* Trending */}
+        <div className="flex items-center gap-2 mb-4 px-1">
+          <TrendingUp className="w-4 h-4 text-blue-500" />
+          <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Categories</span>
+        </div>
 
         {/* Categories */}
-        <h2 className="text-base font-semibold text-gray-900 mb-2 px-2">Categories</h2>
-        <nav className="space-y-1">
+        <nav className="space-y-0.5">
           {categories.map((category) => {
             const Icon = category.icon;
             const isActive = selectedCategory === category.id;
@@ -61,39 +53,42 @@ const MarketplaceSidebar = ({ selectedCategory, onCategorySelect }: MarketplaceS
               <button
                 key={category.id ?? "all"}
                 onClick={() => onCategorySelect(category.id)}
-                className={`flex items-center gap-3 w-full p-2 rounded-lg text-left transition-colors ${
+                className={`flex items-center gap-3 w-full px-3 py-2.5 rounded-xl text-left transition-all duration-200 ${
                   isActive 
-                    ? "bg-blue-50 text-blue-600" 
-                    : "hover:bg-gray-100 text-gray-700"
+                    ? "bg-blue-50 text-blue-700 shadow-sm shadow-blue-100" 
+                    : "hover:bg-gray-50 text-gray-600 hover:text-gray-900"
                 }`}
               >
-                <div className={`w-9 h-9 rounded-full flex items-center justify-center ${
-                  isActive ? "bg-blue-100" : "bg-gray-200"
+                <div className={`w-8 h-8 rounded-lg flex items-center justify-center transition-colors ${
+                  isActive ? "bg-blue-100" : "bg-gray-100"
                 }`}>
-                  <Icon className={`w-5 h-5 ${isActive ? "text-blue-600" : "text-gray-600"}`} />
+                  <Icon className={`w-4 h-4 ${isActive ? "text-blue-600" : "text-gray-500"}`} />
                 </div>
                 <span className="text-sm font-medium">{category.name}</span>
+                {isActive && <ChevronRight className="w-4 h-4 ml-auto text-blue-400" />}
               </button>
             );
           })}
         </nav>
 
-        <hr className="my-4 border-gray-200" />
+        <hr className="my-5 border-gray-100" />
 
         {/* Filters */}
-        <h2 className="text-base font-semibold text-gray-900 mb-3 px-2">Filters</h2>
-        <div className="space-y-3 px-2">
-          <label className="flex items-center gap-2 cursor-pointer">
-            <input type="checkbox" className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500" defaultChecked />
-            <span className="text-sm text-gray-700">Free to use</span>
+        <div className="flex items-center gap-2 mb-4 px-1">
+          <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Filters</span>
+        </div>
+        <div className="space-y-3 px-1">
+          <label className="flex items-center gap-3 cursor-pointer group">
+            <input type="checkbox" className="w-4 h-4 rounded-md border-gray-300 text-blue-600 focus:ring-blue-500 transition" defaultChecked />
+            <span className="text-sm text-gray-600 group-hover:text-gray-900 transition-colors">Free to use</span>
           </label>
-          <label className="flex items-center gap-2 cursor-pointer">
-            <input type="checkbox" className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500" defaultChecked />
-            <span className="text-sm text-gray-700">Verified only</span>
+          <label className="flex items-center gap-3 cursor-pointer group">
+            <input type="checkbox" className="w-4 h-4 rounded-md border-gray-300 text-blue-600 focus:ring-blue-500 transition" defaultChecked />
+            <span className="text-sm text-gray-600 group-hover:text-gray-900 transition-colors">Verified only</span>
           </label>
-          <label className="flex items-center gap-2 cursor-pointer">
-            <input type="checkbox" className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500" />
-            <span className="text-sm text-gray-700">Top rated (4.5+)</span>
+          <label className="flex items-center gap-3 cursor-pointer group">
+            <input type="checkbox" className="w-4 h-4 rounded-md border-gray-300 text-blue-600 focus:ring-blue-500 transition" />
+            <span className="text-sm text-gray-600 group-hover:text-gray-900 transition-colors">Top rated (4.5+)</span>
           </label>
         </div>
       </div>

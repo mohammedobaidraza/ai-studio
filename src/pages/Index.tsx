@@ -53,18 +53,18 @@ const Index = () => {
         />
 
         {/* Main Content */}
-        <main className="flex-1 p-4 lg:p-6">
+        <main className="flex-1 p-5 lg:p-8">
           {/* Title Bar */}
-          <div className="mb-4 flex items-center justify-between">
+          <div className="mb-6 flex items-center justify-between">
             <div>
-              <h2 className="text-xl font-bold text-gray-900">
+              <h2 className="text-2xl font-bold text-gray-900 tracking-tight">
                 {selectedCategory ? `${selectedCategory} Agents` : "Today's picks"}
               </h2>
-              <p className="text-sm text-gray-500">
+              <p className="text-sm text-gray-400 mt-0.5">
                 {filteredAgents.length} agents available
               </p>
             </div>
-            <select className="px-3 py-2 bg-white border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <select className="px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-400 text-gray-600 transition-all">
               <option>Most Popular</option>
               <option>Highest Rated</option>
               <option>Newest</option>
@@ -73,7 +73,7 @@ const Index = () => {
           </div>
 
           {/* Agent Grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3 lg:gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4 lg:gap-5">
             {filteredAgents.map((agent) => (
               <MarketplaceCard
                 key={agent.id}
