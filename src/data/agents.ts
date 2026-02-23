@@ -34,6 +34,9 @@ import lmstudioLogo from "@/assets/logos/lmstudio.ico";
 import openrouterLogo from "@/assets/logos/openrouter.ico";
 import janLogo from "@/assets/logos/jan.ico";
 import togetherLogo from "@/assets/logos/together.ico";
+import phindLogo from "@/assets/logos/phind.ico";
+import youcomLogo from "@/assets/logos/youcom.ico";
+import piLogo from "@/assets/logos/pi.ico";
 
 export const agents: Agent[] = [
   {
@@ -572,6 +575,82 @@ export const agents: Agent[] = [
     ],
     permissions: [
       { name: "API Access", description: "Cloud inference API" },
+    ],
+  },
+  {
+    id: "phind",
+    name: "Phind",
+    description: "AI search engine built for developers and technical queries",
+    longDescription: "Phind is an AI-powered search engine designed specifically for developers. It provides detailed, code-focused answers with sources, making it ideal for programming and technical research.",
+    logo: phindLogo,
+    tags: ["Coding", "Search", "Developer"],
+    verified: true,
+    usageCount: 10000000,
+    rating: 4.6,
+    version: "Latest",
+    free: true,
+    website: "https://www.phind.com",
+    capabilities: [
+      "Developer-focused AI search",
+      "Code generation with explanations",
+      "Technical documentation lookup",
+      "Multi-source answer synthesis",
+      "Follow-up conversations",
+      "Pair programming assistance",
+    ],
+    permissions: [
+      { name: "Web Search", description: "Search technical sources" },
+    ],
+  },
+  {
+    id: "youcom",
+    name: "You.com",
+    description: "AI search engine with multiple modes for different tasks",
+    longDescription: "You.com is an AI-powered search platform offering Smart, Genius, Research, and Create modes. It provides personalized answers, citations, and creative tools all in one place.",
+    logo: youcomLogo,
+    tags: ["Search", "Multi-Mode", "Research"],
+    verified: true,
+    usageCount: 15000000,
+    rating: 4.5,
+    version: "Latest",
+    free: true,
+    website: "https://you.com",
+    capabilities: [
+      "Multiple search modes (Smart, Genius, Research)",
+      "Real-time web search with citations",
+      "Image generation capabilities",
+      "Code generation and debugging",
+      "Personalized search results",
+      "File and document analysis",
+    ],
+    permissions: [
+      { name: "Web Access", description: "Search and cite sources" },
+      { name: "File Upload", description: "Analyze uploaded documents" },
+    ],
+  },
+  {
+    id: "pi",
+    name: "Pi AI",
+    description: "Personal AI companion for thoughtful, empathetic conversations",
+    longDescription: "Pi by Inflection AI is a personal AI designed for friendly, supportive conversations. It excels at emotional intelligence, advice-giving, and being a thoughtful companion.",
+    logo: piLogo,
+    tags: ["Conversational", "Companion", "Empathetic"],
+    verified: true,
+    usageCount: 12000000,
+    rating: 4.7,
+    version: "Latest",
+    free: true,
+    website: "https://pi.ai",
+    capabilities: [
+      "Empathetic conversations",
+      "Personal advice and guidance",
+      "Creative brainstorming",
+      "Learning and exploration",
+      "Emotional support",
+      "Voice conversations",
+    ],
+    permissions: [
+      { name: "Voice", description: "Natural voice interactions" },
     ],
   },
 ];
