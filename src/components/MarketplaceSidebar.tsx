@@ -1,39 +1,72 @@
+import { useMemo, useState } from "react";
 import { 
   MessageSquare, Brain, Search, Code, Sparkles, Users, 
-  Zap, Globe, FileText, Image, ChevronRight, SlidersHorizontal
+  Zap, Globe, FileText, Image, SlidersHorizontal
 } from "lucide-react";
+import { agents } from "@/data/agents";
+import GlassSurface from "./GlassSurface";
 
 interface MarketplaceSidebarProps {
   selectedCategory: string | null;
   onCategorySelect: (category: string | null) => void;
 }
 
-const categories = [
-  { id: null, name: "Browse All", icon: Globe, count: 12 },
-  { id: "Conversational", name: "Conversational", icon: MessageSquare, count: 4 },
-  { id: "Research", name: "Research", icon: Search, count: 3 },
-  { id: "Coding", name: "Coding", icon: Code, count: 3 },
-  { id: "Writing", name: "Writing", icon: FileText, count: 3 },
-  { id: "Analysis", name: "Analysis", icon: Brain, count: 2 },
-  { id: "Creative", name: "Creative", icon: Sparkles, count: 2 },
-  { id: "Multimodal", name: "Multimodal", icon: Image, count: 1 },
-  { id: "Community", name: "Community", icon: Users, count: 1 },
-  { id: "Fast", name: "Fast Inference", icon: Zap, count: 1 },
+const categoryDefs = [
+  { id: null, name: "Browse All", icon: Globe },
+  { id: "Conversational", name: "Conversational", icon: MessageSquare },
+  { id: "Research", name: "Research", icon: Search },
+  { id: "Coding", name: "Coding", icon: Code },
+  { id: "Writing", name: "Writing", icon: FileText },
+  { id: "Analysis", name: "Analysis", icon: Brain },
+  { id: "Creative", name: "Creative", icon: Sparkles },
+  { id: "Multimodal", name: "Multimodal", icon: Image },
+  { id: "Community", name: "Community", icon: Users },
+  { id: "Fast", name: "Fast Inference", icon: Zap },
 ];
 
 const MarketplaceSidebar = ({ selectedCategory, onCategorySelect }: MarketplaceSidebarProps) => {
+  const [filterText, setFilterText] = useState("");
+
+  const categories = useMemo(() => {
+    return categoryDefs.map(cat => {
+      const count = cat.id === null
+        ? agents.length
+        : agents.filter(a => a.tags.some(t => t.toLowerCase() === cat.id!.toLowerCase())).length;
+      return { ...cat, count };
+    });
+  }, []);
+
+  const filteredCategories = useMemo(() => {
+    if (!filterText.trim()) return categories;
+    return categories.filter(c => c.name.toLowerCase().includes(filterText.toLowerCase()));
+  }, [categories, filterText]);
+
   return (
-    <aside className="w-[260px] h-[calc(100vh-60px)] bg-white/50 backdrop-blur-sm border-r border-black/[0.04] overflow-y-auto sticky top-[60px] hidden lg:block">
+    <aside className="w-[260px] h-[calc(100vh-60px)] border-r border-black/[0.04] overflow-y-auto sticky top-[60px] hidden lg:block bg-transparent">
       <div className="p-4 pt-5">
-        {/* Search Box */}
-        <div className="relative mb-5">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-[14px] h-[14px] text-gray-400" />
-          <input
-            type="text"
-            placeholder="Filter categories..."
-            className="w-full pl-9 pr-4 py-2 bg-black/[0.03] rounded-lg text-[13px] focus:outline-none focus:ring-1 focus:ring-black/[0.08] focus:bg-white border border-transparent focus:border-black/[0.06] placeholder:text-gray-400 transition-all duration-200"
-          />
-        </div>
+        {/* Glass Search Box */}
+        <GlassSurface
+          width="100%"
+          height={40}
+          borderRadius={12}
+          brightness={55}
+          opacity={0.9}
+          blur={10}
+          backgroundOpacity={0.1}
+          saturation={1.1}
+          className="mb-5"
+        >
+          <div className="relative w-full h-full flex items-center">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-[14px] h-[14px] text-gray-400" />
+            <input
+              type="text"
+              placeholder="Filter categories..."
+              value={filterText}
+              onChange={(e) => setFilterText(e.target.value)}
+              className="w-full h-full pl-9 pr-4 bg-transparent rounded-xl text-[13px] focus:outline-none placeholder:text-gray-400 transition-all duration-200"
+            />
+          </div>
+        </GlassSurface>
 
         {/* Section Label */}
         <div className="flex items-center justify-between mb-2 px-1">
@@ -42,7 +75,7 @@ const MarketplaceSidebar = ({ selectedCategory, onCategorySelect }: MarketplaceS
 
         {/* Categories */}
         <nav className="space-y-px">
-          {categories.map((category) => {
+          {filteredCategories.map((category) => {
             const Icon = category.icon;
             const isActive = selectedCategory === category.id;
             return (
@@ -95,15 +128,17 @@ const MarketplaceSidebar = ({ selectedCategory, onCategorySelect }: MarketplaceS
         <div className="px-1 space-y-2">
           <div className="flex justify-between items-center">
             <span className="text-[12px] text-gray-400">Total agents</span>
-            <span className="text-[12px] font-semibold text-gray-700">12</span>
+            <span className="text-[12px] font-semibold text-gray-700">{agents.length}</span>
           </div>
           <div className="flex justify-between items-center">
             <span className="text-[12px] text-gray-400">Verified</span>
-            <span className="text-[12px] font-semibold text-gray-700">12</span>
+            <span className="text-[12px] font-semibold text-gray-700">{agents.filter(a => a.verified).length}</span>
           </div>
           <div className="flex justify-between items-center">
             <span className="text-[12px] text-gray-400">Free</span>
-            <span className="text-[12px] font-semibold text-emerald-600">100%</span>
+            <span className="text-[12px] font-semibold text-emerald-600">
+              {Math.round((agents.filter(a => a.free).length / agents.length) * 100)}%
+            </span>
           </div>
         </div>
       </div>
