@@ -1,7 +1,8 @@
 import { useMemo, useState } from "react";
 import { 
   MessageSquare, Brain, Search, Code, Sparkles, Users, 
-  Zap, Globe, FileText, Image, SlidersHorizontal
+  Zap, Globe, FileText, Image, SlidersHorizontal,
+  Shield, Wrench, Bot, Lock, Cpu
 } from "lucide-react";
 import { agents } from "@/data/agents";
 import GlassSurface from "./GlassSurface";
@@ -13,13 +14,18 @@ interface MarketplaceSidebarProps {
 
 const categoryDefs = [
   { id: null, name: "Browse All", icon: Globe },
+  { id: "AI Agent", name: "AI Agents", icon: Bot },
+  { id: "Open Source", name: "Open Source", icon: Code },
+  { id: "Coding", name: "Coding", icon: Cpu },
+  { id: "DevTools", name: "DevTools", icon: Wrench },
+  { id: "Security", name: "Security", icon: Shield },
   { id: "Conversational", name: "Conversational", icon: MessageSquare },
   { id: "Research", name: "Research", icon: Search },
-  { id: "Coding", name: "Coding", icon: Code },
   { id: "Writing", name: "Writing", icon: FileText },
   { id: "Analysis", name: "Analysis", icon: Brain },
   { id: "Creative", name: "Creative", icon: Sparkles },
   { id: "Multimodal", name: "Multimodal", icon: Image },
+  { id: "Privacy", name: "Privacy", icon: Lock },
   { id: "Community", name: "Community", icon: Users },
   { id: "Fast", name: "Fast Inference", icon: Zap },
 ];
