@@ -111,7 +111,7 @@ const Index = () => {
                 )}
               </div>
               <p className="text-[13px] text-gray-400 mt-0.5">
-                {filteredAgents.length} agents available · Page {currentPage} of {totalPages}
+                {filteredAgents.length} of {agents.length} agents · Page {currentPage} of {totalPages}
               </p>
             </div>
             <select 
