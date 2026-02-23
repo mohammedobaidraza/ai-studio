@@ -66,7 +66,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-[#f8f8f7]">
-      <MarketplaceHeader onMenuClick={() => setMobileMenuOpen(true)} />
+      <MarketplaceHeader onMenuClick={() => setMobileMenuOpen(true)} onLogoClick={() => handleCategorySelect(null)} />
 
       <div className="flex">
         <MarketplaceSidebar 
@@ -84,9 +84,19 @@ const Index = () => {
         <main className="flex-1 p-5 lg:p-7">
           <div className="mb-5 flex items-center justify-between">
             <div>
-              <h2 className="text-[22px] font-bold text-gray-900 tracking-tight">
-                {selectedCategory ? `${selectedCategory}` : "Today's picks"}
-              </h2>
+              <div className="flex items-center gap-2">
+                <h2 className="text-[22px] font-bold text-gray-900 tracking-tight">
+                  {selectedCategory ? `${selectedCategory}` : "Today's picks"}
+                </h2>
+                {selectedCategory && (
+                  <button
+                    onClick={() => handleCategorySelect(null)}
+                    className="text-[12px] font-medium text-gray-400 hover:text-gray-600 transition-colors ml-1"
+                  >
+                    ← All
+                  </button>
+                )}
+              </div>
               <p className="text-[13px] text-gray-400 mt-0.5">
                 {filteredAgents.length} agents available · Page {currentPage} of {totalPages}
               </p>
