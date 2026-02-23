@@ -3538,11 +3538,34 @@ export const baseAgents: Agent[] = [
 import { additionalAgents } from "./additionalAgents";
 
 import { additionalAgents500 } from "./additionalAgents500";
+import { additionalAgents_part1 } from "./additionalAgents_500_part1";
+import { additionalAgents_part2 } from "./additionalAgents_500_part2";
+import { additionalAgents_part3 } from "./additionalAgents_500_part3";
+import { additionalAgents_part4 } from "./additionalAgents_500_part4";
+import { additionalAgents_part5 } from "./additionalAgents_500_part5";
+import { additionalAgents_part6 } from "./additionalAgents_500_part6";
+import { additionalAgents_part7 } from "./additionalAgents_500_part7";
+import { additionalAgents_part8 } from "./additionalAgents_500_part8";
+import { additionalAgents_part9 } from "./additionalAgents_500_part9";
+import { additionalAgents_part10 } from "./additionalAgents_500_part10";
 
 // Merge: base agents get no createdAt (older), additional agents are "newest"
 const newAgentDate = "2026-02-23T00:00:00Z";
 
-const allAdditional: Agent[] = [...additionalAgents, ...additionalAgents500].map((a: any) => ({
+const allAdditional: Agent[] = [
+  ...additionalAgents,
+  ...additionalAgents500,
+  ...additionalAgents_part1,
+  ...additionalAgents_part2,
+  ...additionalAgents_part3,
+  ...additionalAgents_part4,
+  ...additionalAgents_part5,
+  ...additionalAgents_part6,
+  ...additionalAgents_part7,
+  ...additionalAgents_part8,
+  ...additionalAgents_part9,
+  ...additionalAgents_part10,
+].map((a: any) => ({
   ...a,
   createdAt: newAgentDate,
 }));
