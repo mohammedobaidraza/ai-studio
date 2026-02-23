@@ -3537,16 +3537,18 @@ export const baseAgents: Agent[] = [
 
 import { additionalAgents } from "./additionalAgents";
 
+import { additionalAgents500 } from "./additionalAgents500";
+
 // Merge: base agents get no createdAt (older), additional agents are "newest"
 const newAgentDate = "2026-02-23T00:00:00Z";
 
-const mergedAdditional: Agent[] = additionalAgents.map((a: any) => ({
+const allAdditional: Agent[] = [...additionalAgents, ...additionalAgents500].map((a: any) => ({
   ...a,
   createdAt: newAgentDate,
 }));
 
 // Deduplicate by id, base agents take priority
 const seenIds = new Set(baseAgents.map(a => a.id));
-const uniqueAdditional = mergedAdditional.filter(a => !seenIds.has(a.id));
+const uniqueAdditional = allAdditional.filter(a => !seenIds.has(a.id));
 
 export const agents: Agent[] = [...baseAgents, ...uniqueAdditional];
