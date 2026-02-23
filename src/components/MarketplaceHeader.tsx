@@ -6,9 +6,10 @@ import GlassSurface from "./GlassSurface";
 
 interface MarketplaceHeaderProps {
   onMenuClick: () => void;
+  onLogoClick?: () => void;
 }
 
-const MarketplaceHeader = ({ onMenuClick }: MarketplaceHeaderProps) => {
+const MarketplaceHeader = ({ onMenuClick, onLogoClick }: MarketplaceHeaderProps) => {
   const [publishOpen, setPublishOpen] = useState(false);
 
   return (
@@ -35,7 +36,7 @@ const MarketplaceHeader = ({ onMenuClick }: MarketplaceHeaderProps) => {
               <Menu className="w-5 h-5 text-gray-700" />
             </button>
 
-            <div className="flex items-center gap-2.5">
+            <button onClick={onLogoClick} className="flex items-center gap-2.5 cursor-pointer">
               <div className="w-8 h-8 rounded-lg flex items-center justify-center overflow-hidden">
                 <img src={agentStoreLogo} alt="Agent Store" className="w-8 h-8 object-contain" />
               </div>
@@ -47,7 +48,7 @@ const MarketplaceHeader = ({ onMenuClick }: MarketplaceHeaderProps) => {
                   Beta
                 </span>
               </div>
-            </div>
+            </button>
           </div>
 
           {/* CENTER — Search */}
