@@ -123,25 +123,6 @@ const MarketplaceSidebar = ({ selectedCategory, onCategorySelect }: MarketplaceS
           ))}
         </div>
 
-        <div className="h-px bg-black/[0.04] my-4" />
-
-        {/* Stats */}
-        <div className="px-1 space-y-2">
-          <div className="flex justify-between items-center">
-            <span className="text-[12px] text-gray-400">Total agents</span>
-            <span className="text-[12px] font-semibold text-gray-700">{agents.length}</span>
-          </div>
-          <div className="flex justify-between items-center">
-            <span className="text-[12px] text-gray-400">Verified</span>
-            <span className="text-[12px] font-semibold text-gray-700">{agents.filter(a => a.verified).length}</span>
-          </div>
-          <div className="flex justify-between items-center">
-            <span className="text-[12px] text-gray-400">Free</span>
-            <span className="text-[12px] font-semibold text-emerald-600">
-              {Math.round((agents.filter(a => a.free).length / agents.length) * 100)}%
-            </span>
-          </div>
-        </div>
       </div>
     </aside>
   );
