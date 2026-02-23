@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useMemo, ChangeEvent } from "react";
 import MarketplaceHeader from "@/components/MarketplaceHeader";
 import MarketplaceSidebar from "@/components/MarketplaceSidebar";
 import MarketplaceCard from "@/components/MarketplaceCard";
@@ -12,6 +12,7 @@ const ITEMS_PER_PAGE = 24;
 
 const Index = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [sortBy, setSortBy] = useState("popular");
   const [selectedAgent, setSelectedAgent] = useState<Agent | null>(null);
   const [detailOpen, setDetailOpen] = useState(false);
   const [launchOpen, setLaunchOpen] = useState(false);
@@ -19,11 +20,22 @@ const Index = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const filteredAgents = useMemo(() => {
-    if (!selectedCategory) return agents;
-    return agents.filter(agent => 
-      agent.tags.some(tag => tag.toLowerCase() === selectedCategory.toLowerCase())
-    );
-  }, [selectedCategory]);
+    let filtered = selectedCategory 
+      ? agents.filter(agent => agent.tags.some(tag => tag.toLowerCase() === selectedCategory.toLowerCase()))
+      : agents;
+    
+    switch (sortBy) {
+      case "newest":
+        return [...filtered].sort((a, b) => (b.createdAt || "").localeCompare(a.createdAt || ""));
+      case "rated":
+        return [...filtered].sort((a, b) => b.rating - a.rating);
+      case "az":
+        return [...filtered].sort((a, b) => a.name.localeCompare(b.name));
+      case "popular":
+      default:
+        return [...filtered].sort((a, b) => b.usageCount - a.usageCount);
+    }
+  }, [selectedCategory, sortBy]);
 
   const totalPages = Math.ceil(filteredAgents.length / ITEMS_PER_PAGE);
   const paginatedAgents = useMemo(() => {
@@ -101,11 +113,15 @@ const Index = () => {
                 {filteredAgents.length} agents available · Page {currentPage} of {totalPages}
               </p>
             </div>
-            <select className="px-3 py-2 bg-white border border-black/[0.06] rounded-lg text-[13px] focus:outline-none focus:ring-1 focus:ring-black/[0.08] text-gray-600 transition-all appearance-none pr-8 cursor-pointer hover:border-black/[0.12]">
-              <option>Most Popular</option>
-              <option>Highest Rated</option>
-              <option>Newest</option>
-              <option>A-Z</option>
+            <select 
+              value={sortBy}
+              onChange={(e: ChangeEvent<HTMLSelectElement>) => { setSortBy(e.target.value); setCurrentPage(1); }}
+              className="px-3 py-2 bg-white border border-black/[0.06] rounded-lg text-[13px] focus:outline-none focus:ring-1 focus:ring-black/[0.08] text-gray-600 transition-all appearance-none pr-8 cursor-pointer hover:border-black/[0.12]"
+            >
+              <option value="popular">Most Popular</option>
+              <option value="rated">Highest Rated</option>
+              <option value="newest">Newest</option>
+              <option value="az">A-Z</option>
             </select>
           </div>
 

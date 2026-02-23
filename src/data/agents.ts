@@ -14,6 +14,7 @@ export interface Agent {
   permissions: { name: string; description: string }[];
   free: boolean;
   website?: string;
+  createdAt?: string; // ISO date string
 }
 
 import chatgptLogo from "@/assets/logos/chatgpt.webp";
@@ -39,7 +40,7 @@ import youcomLogo from "@/assets/logos/youcom.ico";
 import piLogo from "@/assets/logos/pi.ico";
 import agentstoreLogo from "@/assets/logos/agentstore.png";
 
-export const agents: Agent[] = [
+export const baseAgents: Agent[] = [
   {
     id: "chatgpt",
     name: "ChatGPT",
@@ -3533,3 +3534,19 @@ export const agents: Agent[] = [
     permissions: [{ name: "Code Execution", description: "Execute code dynamically" }],
   },
 ];
+
+import { additionalAgents } from "./additionalAgents";
+
+// Merge: base agents get no createdAt (older), additional agents are "newest"
+const newAgentDate = "2026-02-23T00:00:00Z";
+
+const mergedAdditional: Agent[] = additionalAgents.map((a: any) => ({
+  ...a,
+  createdAt: newAgentDate,
+}));
+
+// Deduplicate by id, base agents take priority
+const seenIds = new Set(baseAgents.map(a => a.id));
+const uniqueAdditional = mergedAdditional.filter(a => !seenIds.has(a.id));
+
+export const agents: Agent[] = [...baseAgents, ...uniqueAdditional];
