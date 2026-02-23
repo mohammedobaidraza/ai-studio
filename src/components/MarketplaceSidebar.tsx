@@ -32,7 +32,8 @@ const MarketplaceSidebar = ({ selectedCategory, onCategorySelect }: MarketplaceS
       const count = cat.id === null
         ? agents.length
         : agents.filter(a => a.tags.some(t => t.toLowerCase() === cat.id!.toLowerCase())).length;
-      return { ...cat, count };
+      const displayCount = cat.id === null && count >= 100 ? "100+" : `${count}`;
+      return { ...cat, count: displayCount };
     });
   }, []);
 
