@@ -29,6 +29,11 @@ import groqLogo from "@/assets/logos/groq.ico";
 import deepseekLogo from "@/assets/logos/deepseek.ico";
 import characteraiLogo from "@/assets/logos/characterai.ico";
 import kaggleLogo from "@/assets/logos/kaggle.ico";
+import ollamaLogo from "@/assets/logos/ollama.png";
+import lmstudioLogo from "@/assets/logos/lmstudio.ico";
+import openrouterLogo from "@/assets/logos/openrouter.ico";
+import janLogo from "@/assets/logos/jan.ico";
+import togetherLogo from "@/assets/logos/together.ico";
 
 export const agents: Agent[] = [
   {
@@ -442,6 +447,131 @@ export const agents: Agent[] = [
     permissions: [
       { name: "API Access", description: "Call models via REST API" },
       { name: "Rate Limits", description: "Free tier with generous limits" },
+    ],
+  },
+  {
+    id: "ollama",
+    name: "Ollama",
+    description: "Run open-source LLMs locally on your machine",
+    longDescription: "Ollama makes it easy to run large language models locally. Download and run Llama 3, Mistral, Gemma, Phi, and many more models with a single command.",
+    logo: ollamaLogo,
+    tags: ["Local", "Open Source", "Privacy"],
+    verified: true,
+    usageCount: 18000000,
+    rating: 4.8,
+    version: "Latest",
+    free: true,
+    website: "https://ollama.com",
+    capabilities: [
+      "Run LLMs locally with no internet",
+      "Support for Llama 3, Mistral, Gemma, Phi",
+      "Simple CLI and API interface",
+      "Custom model creation (Modelfile)",
+      "GPU acceleration support",
+      "Complete data privacy",
+    ],
+    permissions: [
+      { name: "Local Compute", description: "Uses your hardware for inference" },
+    ],
+  },
+  {
+    id: "lmstudio",
+    name: "LM Studio",
+    description: "Desktop app to discover, download, and run local LLMs",
+    longDescription: "LM Studio provides a beautiful desktop interface for running open-source models locally. Browse, download, and chat with models from Hugging Face with full privacy.",
+    logo: lmstudioLogo,
+    tags: ["Local", "Desktop", "Privacy"],
+    verified: true,
+    usageCount: 10000000,
+    rating: 4.7,
+    version: "Latest",
+    free: true,
+    website: "https://lmstudio.ai",
+    capabilities: [
+      "Browse and download models from HF",
+      "Chat interface with local models",
+      "OpenAI-compatible local server",
+      "Model performance benchmarking",
+      "GPU and CPU inference",
+      "Full offline capability",
+    ],
+    permissions: [
+      { name: "Local Storage", description: "Download models to your machine" },
+    ],
+  },
+  {
+    id: "openrouter",
+    name: "OpenRouter",
+    description: "Unified API for 200+ AI models from all providers",
+    longDescription: "OpenRouter provides a single API to access models from OpenAI, Anthropic, Google, Meta, Mistral, and more. Compare prices, switch models instantly, and get free tier access.",
+    logo: openrouterLogo,
+    tags: ["API", "Multi-Model", "Open Source"],
+    verified: true,
+    usageCount: 12000000,
+    rating: 4.6,
+    version: "Latest",
+    free: true,
+    website: "https://openrouter.ai",
+    capabilities: [
+      "200+ models via single API",
+      "Free tier for many models",
+      "OpenAI-compatible API format",
+      "Automatic fallback routing",
+      "Usage analytics dashboard",
+      "Pay-per-token pricing",
+    ],
+    permissions: [
+      { name: "API Access", description: "Unified API for all models" },
+    ],
+  },
+  {
+    id: "jan",
+    name: "Jan",
+    description: "Open-source ChatGPT alternative that runs offline",
+    longDescription: "Jan is a free, open-source desktop app for running AI models locally. It offers a ChatGPT-like interface with full privacy — your data never leaves your computer.",
+    logo: janLogo,
+    tags: ["Local", "Open Source", "Desktop"],
+    verified: true,
+    usageCount: 5000000,
+    rating: 4.5,
+    version: "Latest",
+    free: true,
+    website: "https://jan.ai",
+    capabilities: [
+      "ChatGPT-like local interface",
+      "Download and run open models",
+      "Extensions and plugins system",
+      "OpenAI-compatible local API",
+      "Cross-platform (Mac, Windows, Linux)",
+      "100% offline capable",
+    ],
+    permissions: [
+      { name: "Local Compute", description: "Runs entirely on your device" },
+    ],
+  },
+  {
+    id: "together",
+    name: "Together AI",
+    description: "Fast inference platform for leading open-source models",
+    longDescription: "Together AI offers blazing-fast inference for open-source models like Llama 3, Mixtral, and more. Get started free with generous rate limits and competitive pricing.",
+    logo: togetherLogo,
+    tags: ["Inference", "Open Source", "API"],
+    verified: true,
+    usageCount: 9000000,
+    rating: 4.6,
+    version: "Latest",
+    free: true,
+    website: "https://together.ai",
+    capabilities: [
+      "Fast inference for open models",
+      "Fine-tuning capabilities",
+      "Serverless and dedicated endpoints",
+      "Support for Llama, Mixtral, SDXL",
+      "OpenAI-compatible API",
+      "Free trial credits included",
+    ],
+    permissions: [
+      { name: "API Access", description: "Cloud inference API" },
     ],
   },
 ];
