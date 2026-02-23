@@ -7,6 +7,7 @@ import AgentDetail from "@/components/AgentDetail";
 import LaunchPanel from "@/components/LaunchPanel";
 import { agents, Agent } from "@/data/agents";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import Footer from "@/components/Footer";
 
 const ITEMS_PER_PAGE = 24;
 
@@ -200,6 +201,7 @@ const Index = () => {
         isOpen={launchOpen}
         onClose={() => setLaunchOpen(false)}
       />
+      <Footer />
     </div>
   );
 };
