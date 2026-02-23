@@ -1,10 +1,6 @@
 import { useMemo, useState } from "react";
-import { 
-  MessageSquare, Brain, Search, Code, Sparkles, Users, 
-  Zap, Globe, FileText, Image, SlidersHorizontal,
-  Shield, Wrench, Bot, Lock, Cpu
-} from "lucide-react";
-import { agents } from "@/data/agents";
+import { Search, SlidersHorizontal } from "lucide-react";
+import { getCategories } from "@/data/categories";
 import GlassSurface from "./GlassSurface";
 
 interface MarketplaceSidebarProps {
@@ -12,36 +8,10 @@ interface MarketplaceSidebarProps {
   onCategorySelect: (category: string | null) => void;
 }
 
-const categoryDefs = [
-  { id: null, name: "Browse All", icon: Globe },
-  { id: "AI Agent", name: "AI Agents", icon: Bot },
-  { id: "Open Source", name: "Open Source", icon: Code },
-  { id: "Coding", name: "Coding", icon: Cpu },
-  { id: "DevTools", name: "DevTools", icon: Wrench },
-  { id: "Security", name: "Security", icon: Shield },
-  { id: "Conversational", name: "Conversational", icon: MessageSquare },
-  { id: "Research", name: "Research", icon: Search },
-  { id: "Writing", name: "Writing", icon: FileText },
-  { id: "Analysis", name: "Analysis", icon: Brain },
-  { id: "Creative", name: "Creative", icon: Sparkles },
-  { id: "Multimodal", name: "Multimodal", icon: Image },
-  { id: "Privacy", name: "Privacy", icon: Lock },
-  { id: "Community", name: "Community", icon: Users },
-  { id: "Fast", name: "Fast Inference", icon: Zap },
-];
-
 const MarketplaceSidebar = ({ selectedCategory, onCategorySelect }: MarketplaceSidebarProps) => {
   const [filterText, setFilterText] = useState("");
 
-  const categories = useMemo(() => {
-    return categoryDefs.map(cat => {
-      const count = cat.id === null
-        ? agents.length
-        : agents.filter(a => a.tags.some(t => t.toLowerCase() === cat.id!.toLowerCase())).length;
-      const displayCount = cat.id === null && count >= 100 ? "100+" : `${count}`;
-      return { ...cat, count: displayCount };
-    });
-  }, []);
+  const categories = useMemo(() => getCategories(), []);
 
   const filteredCategories = useMemo(() => {
     if (!filterText.trim()) return categories;

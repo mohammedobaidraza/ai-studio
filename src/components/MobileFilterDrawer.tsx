@@ -1,4 +1,6 @@
-import { X, MessageSquare, Brain, Search, Code, Sparkles, Users, Zap, Globe, FileText, Image } from "lucide-react";
+import { useMemo } from "react";
+import { X } from "lucide-react";
+import { getCategories } from "@/data/categories";
 
 interface MobileFilterDrawerProps {
   isOpen: boolean;
@@ -7,20 +9,9 @@ interface MobileFilterDrawerProps {
   onCategorySelect: (category: string | null) => void;
 }
 
-const categories = [
-  { id: null, name: "Browse All", icon: Globe },
-  { id: "Conversational", name: "Conversational", icon: MessageSquare },
-  { id: "Research", name: "Research", icon: Search },
-  { id: "Coding", name: "Coding", icon: Code },
-  { id: "Writing", name: "Writing", icon: FileText },
-  { id: "Analysis", name: "Analysis", icon: Brain },
-  { id: "Creative", name: "Creative", icon: Sparkles },
-  { id: "Multimodal", name: "Multimodal", icon: Image },
-  { id: "Community", name: "Community", icon: Users },
-  { id: "Fast", name: "Fast Inference", icon: Zap },
-];
-
 const MobileFilterDrawer = ({ isOpen, onClose, selectedCategory, onCategorySelect }: MobileFilterDrawerProps) => {
+  const categories = useMemo(() => getCategories(), []);
+
   if (!isOpen) return null;
 
   return (
