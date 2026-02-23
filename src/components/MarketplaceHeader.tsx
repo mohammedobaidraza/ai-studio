@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Bell, MessageCircle, Menu, Plus, Search, Command } from "lucide-react";
-import huggingfaceLogo from "@/assets/logos/huggingface.svg";
 import agentStoreLogo from "@/assets/logos/agentstore.png";
 import PublishAgentModal from "./PublishAgentModal";
 import GlassSurface from "./GlassSurface";
@@ -72,20 +71,6 @@ const MarketplaceHeader = ({ onMenuClick }: MarketplaceHeaderProps) => {
 
           {/* RIGHT — Actions */}
           <div className="flex items-center gap-1.5">
-            <a
-              href="https://huggingface.co"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-1.5 px-2.5 py-1.5 hover:bg-black/[0.04] rounded-lg transition-all duration-150 group"
-              title="Browse Hugging Face Models"
-            >
-              <img src={huggingfaceLogo} alt="Hugging Face" className="w-[18px] h-[18px]" />
-              <span className="hidden lg:inline text-[13px] font-medium text-gray-500 group-hover:text-gray-800 transition-colors">
-                Hub
-              </span>
-            </a>
-
-            <div className="w-px h-5 bg-black/[0.06] mx-1 hidden sm:block" />
 
             <button
               onClick={() => setPublishOpen(true)}

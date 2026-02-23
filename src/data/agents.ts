@@ -28,6 +28,7 @@ import cohereLogo from "@/assets/logos/cohere.ico";
 import groqLogo from "@/assets/logos/groq.ico";
 import deepseekLogo from "@/assets/logos/deepseek.ico";
 import characteraiLogo from "@/assets/logos/characterai.ico";
+import kaggleLogo from "@/assets/logos/kaggle.ico";
 
 export const agents: Agent[] = [
   {
@@ -337,6 +338,110 @@ export const agents: Agent[] = [
     ],
     permissions: [
       { name: "Character Creation", description: "Build custom AI personas" },
+    ],
+  },
+  {
+    id: "kaggle",
+    name: "Kaggle",
+    description: "Data science platform with competitions, datasets, and notebooks",
+    longDescription: "Kaggle is the world's largest data science community with powerful tools and resources. Compete in ML competitions, access free datasets, and run notebooks with free GPU/TPU.",
+    logo: kaggleLogo,
+    tags: ["Data Science", "Competitions", "Notebooks"],
+    verified: true,
+    usageCount: 35000000,
+    rating: 4.7,
+    version: "Latest",
+    free: true,
+    website: "https://kaggle.com",
+    capabilities: [
+      "Machine learning competitions",
+      "Free datasets repository",
+      "Jupyter notebooks with free GPU/TPU",
+      "Community discussions and forums",
+      "Model hosting and sharing",
+      "Learning courses and tutorials",
+    ],
+    permissions: [
+      { name: "Notebooks", description: "Run code with free compute" },
+      { name: "Datasets", description: "Access public datasets" },
+    ],
+  },
+  {
+    id: "hf-assistants",
+    name: "HF Assistants",
+    description: "Create and share custom AI assistants on Hugging Face",
+    longDescription: "Hugging Face Assistants lets you create custom AI agents powered by open-source models. Build, customize, and share assistants with the community.",
+    logo: huggingfaceLogo,
+    tags: ["Assistants", "Open Source", "Community"],
+    verified: true,
+    usageCount: 8000000,
+    rating: 4.5,
+    version: "Latest",
+    free: true,
+    website: "https://huggingface.co/chat/assistants",
+    capabilities: [
+      "Create custom AI assistants",
+      "Use open-source models as base",
+      "Share assistants with community",
+      "Web search integration",
+      "Custom system prompts",
+      "Tool use capabilities",
+    ],
+    permissions: [
+      { name: "Model Access", description: "Use open-source LLMs" },
+      { name: "Web Search", description: "Search the internet" },
+    ],
+  },
+  {
+    id: "hf-spaces",
+    name: "HF Spaces",
+    description: "Discover and run community ML demos and apps",
+    longDescription: "Hugging Face Spaces hosts thousands of community-built ML demos and applications. Try cutting-edge models for image generation, audio, NLP, and more — all for free.",
+    logo: huggingfaceLogo,
+    tags: ["Demos", "ML Apps", "Community"],
+    verified: true,
+    usageCount: 20000000,
+    rating: 4.6,
+    version: "Latest",
+    free: true,
+    website: "https://huggingface.co/spaces",
+    capabilities: [
+      "Run ML demos instantly",
+      "Image generation models",
+      "Audio and speech models",
+      "Text and NLP applications",
+      "Deploy your own Spaces",
+      "Gradio and Streamlit support",
+    ],
+    permissions: [
+      { name: "Spaces Access", description: "Run community demos" },
+      { name: "Deploy", description: "Host your own ML apps" },
+    ],
+  },
+  {
+    id: "hf-inference",
+    name: "HF Inference API",
+    description: "Run 200k+ models via serverless API for free",
+    longDescription: "The Hugging Face Inference API gives you free access to thousands of models for text generation, image creation, embeddings, and more — no setup required.",
+    logo: huggingfaceLogo,
+    tags: ["API", "Inference", "Models"],
+    verified: true,
+    usageCount: 15000000,
+    rating: 4.7,
+    version: "Latest",
+    free: true,
+    website: "https://huggingface.co/inference-api",
+    capabilities: [
+      "200k+ models available",
+      "Text generation and chat",
+      "Image generation and editing",
+      "Embeddings and similarity",
+      "Audio transcription",
+      "Zero-setup serverless API",
+    ],
+    permissions: [
+      { name: "API Access", description: "Call models via REST API" },
+      { name: "Rate Limits", description: "Free tier with generous limits" },
     ],
   },
 ];
