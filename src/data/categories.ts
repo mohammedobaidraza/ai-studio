@@ -1,31 +1,25 @@
 import {
   MessageSquare, Brain, Search, Code, Sparkles, Users,
-  Zap, Globe, FileText, Image, Shield, Wrench, Bot, Lock, Cpu, Tag,
+  Zap, Globe, FileText, Image, Shield, Wrench, Bot, Lock, Cpu,
   type LucideIcon
 } from "lucide-react";
 import { agents } from "./agents";
 
-const iconMap: Record<string, LucideIcon> = {
-  "AI Agent": Bot,
-  "Open Source": Code,
-  "Coding": Cpu,
-  "DevTools": Wrench,
-  "Security": Shield,
-  "Conversational": MessageSquare,
-  "Research": Search,
-  "Writing": FileText,
-  "Analysis": Brain,
-  "Creative": Sparkles,
-  "Multimodal": Image,
-  "Privacy": Lock,
-  "Community": Users,
-  "Fast": Zap,
-};
-
-const nameMap: Record<string, string> = {
-  "AI Agent": "AI Agents",
-  "Fast": "Fast Inference",
-};
+// Curated premium categories — ordered intentionally
+const curatedCategories: { id: string; name: string; icon: LucideIcon }[] = [
+  { id: "AI Agent", name: "AI Agents", icon: Bot },
+  { id: "Coding", name: "Coding", icon: Cpu },
+  { id: "Research", name: "Research", icon: Search },
+  { id: "Conversational", name: "Chat", icon: MessageSquare },
+  { id: "Writing", name: "Writing", icon: FileText },
+  { id: "Creative", name: "Creative", icon: Sparkles },
+  { id: "Analysis", name: "Analysis", icon: Brain },
+  { id: "Open Source", name: "Open Source", icon: Code },
+  { id: "DevTools", name: "Dev Tools", icon: Wrench },
+  { id: "Multimodal", name: "Multimodal", icon: Image },
+  { id: "Security", name: "Security", icon: Shield },
+  { id: "Fast", name: "Fast", icon: Zap },
+];
 
 export interface CategoryDef {
   id: string | null;
@@ -35,30 +29,21 @@ export interface CategoryDef {
 }
 
 export function getCategories(): CategoryDef[] {
-  // Collect all unique tags from agents
-  const tagCounts = new Map<string, number>();
-  for (const agent of agents) {
-    for (const tag of agent.tags) {
-      tagCounts.set(tag, (tagCounts.get(tag) || 0) + 1);
-    }
-  }
-
-  // Sort tags by count descending
-  const sortedTags = [...tagCounts.entries()].sort((a, b) => b[1] - a[1]);
-
   const browseAll: CategoryDef = {
     id: null,
     name: "Browse All",
     icon: Globe,
-    count: agents.length >= 100 ? `${agents.length.toLocaleString()}` : `${agents.length}`,
+    count: agents.length >= 1000 ? `${(agents.length / 1000).toFixed(1)}k` : `${agents.length}`,
   };
 
-  const categoriesFromTags: CategoryDef[] = sortedTags.map(([tag, count]) => ({
-    id: tag,
-    name: nameMap[tag] || tag,
-    icon: iconMap[tag] || Tag,
-    count: `${count}`,
-  }));
+  const cats: CategoryDef[] = curatedCategories
+    .map(cat => {
+      const count = agents.filter(a =>
+        a.tags.some(t => t.toLowerCase() === cat.id.toLowerCase())
+      ).length;
+      return { ...cat, count: count >= 1000 ? `${(count / 1000).toFixed(1)}k` : `${count}` };
+    })
+    .filter(c => parseInt(c.count) > 0 || c.count.includes("k"));
 
-  return [browseAll, ...categoriesFromTags];
+  return [browseAll, ...cats];
 }
