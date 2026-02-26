@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Mail, Lock, User, Eye, EyeOff, ArrowRight, Check } from "lucide-react";
 import agentStoreLogo from "@/assets/logos/agentstore.png";
+import { useAuth } from "@/contexts/AuthContext";
 
 type AuthMode = "login" | "signup";
 
@@ -13,21 +14,22 @@ const Auth = () => {
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
+  const { login } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    // Mock auth — will connect to backend later
     setTimeout(() => {
       setLoading(false);
+      login({ name: name || "Alex Chen", username: "alexchen", avatar: "A" });
       navigate("/");
     }, 1200);
   };
 
   const handleOAuth = (provider: string) => {
     console.log(`OAuth with ${provider}`);
-    // Will connect to backend later
+    login({ name: "Alex Chen", username: "alexchen", avatar: "A" });
     navigate("/");
   };
 
