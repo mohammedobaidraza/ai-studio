@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Bell, MessageCircle, Menu, Plus, Search, Command } from "lucide-react";
+import { MessageCircle, Menu, Plus, Search, Command } from "lucide-react";
 import agentStoreLogo from "@/assets/logos/agentstore.png";
 import PublishAgentModal from "./PublishAgentModal";
 import GlassSurface from "./GlassSurface";
+import AvatarDropdown from "./AvatarDropdown";
+import NotificationsDropdown from "./NotificationsDropdown";
 
 interface MarketplaceHeaderProps {
   onMenuClick: () => void;
@@ -87,14 +89,8 @@ const MarketplaceHeader = ({ onMenuClick, onLogoClick }: MarketplaceHeaderProps)
               <MessageCircle className="w-[18px] h-[18px] text-gray-500" />
             </button>
 
-            <button className="p-2 hover:bg-black/[0.04] rounded-lg relative transition-all duration-150">
-              <Bell className="w-[18px] h-[18px] text-gray-500" />
-              <span className="absolute top-1.5 right-1.5 w-[7px] h-[7px] bg-red-500 rounded-full ring-[1.5px] ring-white" />
-            </button>
-
-            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-violet-500 to-indigo-600 flex items-center justify-center text-white text-xs font-bold ml-1 shadow-sm shadow-violet-500/20 cursor-pointer hover:shadow-md hover:shadow-violet-500/30 transition-all duration-200">
-              A
-            </div>
+            <NotificationsDropdown />
+            <AvatarDropdown />
           </div>
         </header>
       </GlassSurface>

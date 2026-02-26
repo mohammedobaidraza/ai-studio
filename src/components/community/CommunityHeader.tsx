@@ -1,7 +1,9 @@
 import { useState } from "react";
-import { Bell, Menu, Plus, Search, Command } from "lucide-react";
+import { Menu, Plus, Search, Command } from "lucide-react";
 import { Link } from "react-router-dom";
 import GlassSurface from "@/components/GlassSurface";
+import AvatarDropdown from "@/components/AvatarDropdown";
+import NotificationsDropdown from "@/components/NotificationsDropdown";
 import CreatePostModal from "./CreatePostModal";
 
 interface CommunityHeaderProps {
@@ -64,13 +66,8 @@ const CommunityHeader = ({ onMenuClick, onCreatePost }: CommunityHeaderProps) =>
               <Plus className="w-3.5 h-3.5" />
               <span className="hidden sm:inline">Post</span>
             </button>
-            <button className="p-2 hover:bg-gray-100 rounded-xl relative transition-all duration-150">
-              <Bell className="w-[18px] h-[18px] text-gray-500" />
-              <span className="absolute top-1.5 right-1.5 w-[6px] h-[6px] bg-red-500 rounded-full ring-2 ring-white" />
-            </button>
-            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-gray-800 to-gray-600 flex items-center justify-center text-white text-xs font-bold ml-1 cursor-pointer hover:ring-2 hover:ring-gray-300 transition-all">
-              A
-            </div>
+            <NotificationsDropdown />
+            <AvatarDropdown />
           </div>
         </header>
       </GlassSurface>
