@@ -5,6 +5,8 @@ import GlassSurface from "@/components/GlassSurface";
 import AvatarDropdown from "@/components/AvatarDropdown";
 import NotificationsDropdown from "@/components/NotificationsDropdown";
 import CreatePostModal from "./CreatePostModal";
+import SignInRequiredModal from "@/components/SignInRequiredModal";
+import { useAuth } from "@/contexts/AuthContext";
 
 interface CommunityHeaderProps {
   onMenuClick: () => void;
@@ -13,6 +15,16 @@ interface CommunityHeaderProps {
 
 const CommunityHeader = ({ onMenuClick, onCreatePost }: CommunityHeaderProps) => {
   const [createOpen, setCreateOpen] = useState(false);
+  const [signInOpen, setSignInOpen] = useState(false);
+  const { isAuthenticated } = useAuth();
+
+  const handlePostClick = () => {
+    if (!isAuthenticated) {
+      setSignInOpen(true);
+    } else {
+      setCreateOpen(true);
+    }
+  };
 
   return (
     <>
@@ -60,7 +72,7 @@ const CommunityHeader = ({ onMenuClick, onCreatePost }: CommunityHeaderProps) =>
 
           <div className="flex items-center gap-2">
             <button
-              onClick={() => setCreateOpen(true)}
+              onClick={handlePostClick}
               className="flex items-center gap-1.5 px-4 py-2 bg-gray-900 hover:bg-gray-800 text-white rounded-xl transition-all duration-150 text-[13px] font-medium active:scale-[0.97]"
             >
               <Plus className="w-3.5 h-3.5" />
@@ -73,6 +85,7 @@ const CommunityHeader = ({ onMenuClick, onCreatePost }: CommunityHeaderProps) =>
       </GlassSurface>
 
       <CreatePostModal isOpen={createOpen} onClose={() => setCreateOpen(false)} onSubmit={onCreatePost} />
+      <SignInRequiredModal open={signInOpen} onClose={() => setSignInOpen(false)} action="create a post" />
     </>
   );
 };

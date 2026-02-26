@@ -6,6 +6,8 @@ import PublishAgentModal from "./PublishAgentModal";
 import GlassSurface from "./GlassSurface";
 import AvatarDropdown from "./AvatarDropdown";
 import NotificationsDropdown from "./NotificationsDropdown";
+import SignInRequiredModal from "./SignInRequiredModal";
+import { useAuth } from "@/contexts/AuthContext";
 
 interface MarketplaceHeaderProps {
   onMenuClick: () => void;
@@ -14,7 +16,17 @@ interface MarketplaceHeaderProps {
 
 const MarketplaceHeader = ({ onMenuClick, onLogoClick }: MarketplaceHeaderProps) => {
   const [publishOpen, setPublishOpen] = useState(false);
+  const [signInOpen, setSignInOpen] = useState(false);
+  const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
+
+  const handlePublishClick = () => {
+    if (!isAuthenticated) {
+      setSignInOpen(true);
+    } else {
+      setPublishOpen(true);
+    }
+  };
 
   return (
     <>
@@ -78,7 +90,7 @@ const MarketplaceHeader = ({ onMenuClick, onLogoClick }: MarketplaceHeaderProps)
           <div className="flex items-center gap-1.5">
 
             <button
-              onClick={() => setPublishOpen(true)}
+              onClick={handlePublishClick}
               className="flex items-center gap-1.5 px-3.5 py-[7px] bg-gray-900 hover:bg-gray-800 text-white rounded-lg transition-all duration-150 text-[13px] font-medium shadow-sm shadow-gray-900/10 active:scale-[0.97]"
             >
               <Plus className="w-3.5 h-3.5" />
@@ -96,6 +108,7 @@ const MarketplaceHeader = ({ onMenuClick, onLogoClick }: MarketplaceHeaderProps)
       </GlassSurface>
 
       <PublishAgentModal isOpen={publishOpen} onClose={() => setPublishOpen(false)} />
+      <SignInRequiredModal open={signInOpen} onClose={() => setSignInOpen(false)} action="publish an agent" />
     </>
   );
 };
