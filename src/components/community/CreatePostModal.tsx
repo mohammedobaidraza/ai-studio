@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 interface CreatePostModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onSubmit: (post: { title: string; content: string; communityId: string; type: string }) => void;
 }
 
 const postTypes = [
@@ -15,11 +16,21 @@ const postTypes = [
   { id: "poll", label: "Poll", icon: BarChart3 },
 ];
 
-const CreatePostModal = ({ isOpen, onClose }: CreatePostModalProps) => {
+const CreatePostModal = ({ isOpen, onClose, onSubmit }: CreatePostModalProps) => {
   const [postType, setPostType] = useState("text");
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [selectedCommunity, setSelectedCommunity] = useState("");
+
+  const handleSubmit = () => {
+    if (!title.trim() || !selectedCommunity) return;
+    onSubmit({ title: title.trim(), content: content.trim(), communityId: selectedCommunity, type: postType });
+    setTitle("");
+    setContent("");
+    setSelectedCommunity("");
+    setPostType("text");
+    onClose();
+  };
 
   if (!isOpen) return null;
 
@@ -107,6 +118,7 @@ const CreatePostModal = ({ isOpen, onClose }: CreatePostModalProps) => {
                 Cancel
               </button>
               <button
+                onClick={handleSubmit}
                 disabled={!title.trim() || !selectedCommunity}
                 className="px-5 py-2 bg-gray-900 text-white text-[13px] font-medium rounded-xl hover:bg-gray-800 transition-all disabled:opacity-30 disabled:cursor-not-allowed"
               >
