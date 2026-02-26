@@ -6,9 +6,10 @@ import CreatePostModal from "./CreatePostModal";
 
 interface CommunityHeaderProps {
   onMenuClick: () => void;
+  onCreatePost: (post: { title: string; content: string; communityId: string; type: string }) => void;
 }
 
-const CommunityHeader = ({ onMenuClick }: CommunityHeaderProps) => {
+const CommunityHeader = ({ onMenuClick, onCreatePost }: CommunityHeaderProps) => {
   const [createOpen, setCreateOpen] = useState(false);
 
   return (
@@ -74,7 +75,7 @@ const CommunityHeader = ({ onMenuClick }: CommunityHeaderProps) => {
         </header>
       </GlassSurface>
 
-      <CreatePostModal isOpen={createOpen} onClose={() => setCreateOpen(false)} />
+      <CreatePostModal isOpen={createOpen} onClose={() => setCreateOpen(false)} onSubmit={onCreatePost} />
     </>
   );
 };

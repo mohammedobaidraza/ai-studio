@@ -3,7 +3,7 @@ import CommunityHeader from "@/components/community/CommunityHeader";
 import CommunitySidebar from "@/components/community/CommunitySidebar";
 import PostCard from "@/components/community/PostCard";
 import ThreadView from "@/components/community/ThreadView";
-import { posts, CommunityPost } from "@/data/communityData";
+import { posts as initialPosts, communities, CommunityPost } from "@/data/communityData";
 import Footer from "@/components/Footer";
 
 type SortOption = "hot" | "new" | "top";
@@ -13,15 +13,38 @@ const Community = () => {
   const [sortBy, setSortBy] = useState<SortOption>("hot");
   const [selectedPost, setSelectedPost] = useState<CommunityPost | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [userPosts, setUserPosts] = useState<CommunityPost[]>([]);
+
+  const allPosts = useMemo(() => [...userPosts, ...initialPosts], [userPosts]);
+
+  const handleCreatePost = useCallback((data: { title: string; content: string; communityId: string; type: string }) => {
+    const community = communities.find(c => c.id === data.communityId);
+    if (!community) return;
+
+    const newPost: CommunityPost = {
+      id: `user-${Date.now()}`,
+      title: data.title,
+      content: data.content,
+      author: { name: "you", avatar: "A", karma: 1 },
+      community: { name: community.name, icon: community.icon },
+      createdAt: "just now",
+      upvotes: 1,
+      downvotes: 0,
+      commentCount: 0,
+      type: data.type as CommunityPost["type"],
+    };
+
+    setUserPosts(prev => [newPost, ...prev]);
+  }, []);
 
   const filteredPosts = useMemo(() => {
-    let filtered = posts;
+    let filtered = allPosts;
 
     if (selectedFeed !== "home" && selectedFeed !== "trending" && selectedFeed !== "saved" && selectedFeed !== "drafts") {
-      filtered = posts.filter(p => p.community.name.toLowerCase().replace(/\s/g, "") === selectedFeed);
+      filtered = allPosts.filter(p => p.community.name.toLowerCase().replace(/\s/g, "") === selectedFeed);
     }
     if (selectedFeed === "trending") {
-      filtered = [...posts].sort((a, b) => (b.upvotes - b.downvotes) - (a.upvotes - a.downvotes));
+      filtered = [...allPosts].sort((a, b) => (b.upvotes - b.downvotes) - (a.upvotes - a.downvotes));
     }
 
     switch (sortBy) {
@@ -33,7 +56,7 @@ const Community = () => {
       default:
         return [...filtered].sort((a, b) => (b.upvotes + b.commentCount) - (a.upvotes + a.commentCount));
     }
-  }, [selectedFeed, sortBy]);
+  }, [selectedFeed, sortBy, allPosts]);
 
   const handlePostClick = useCallback((post: CommunityPost) => {
     setSelectedPost(post);
@@ -41,13 +64,12 @@ const Community = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <CommunityHeader onMenuClick={() => setMobileMenuOpen(!mobileMenuOpen)} />
+      <CommunityHeader onMenuClick={() => setMobileMenuOpen(!mobileMenuOpen)} onCreatePost={handleCreatePost} />
 
       <div className="flex">
         <CommunitySidebar selectedFeed={selectedFeed} onFeedSelect={setSelectedFeed} />
 
         <main className="flex-1 py-6 px-5 lg:px-8 max-w-2xl">
-          {/* Sort */}
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-1 bg-white rounded-xl border border-gray-200 p-1">
               {(["hot", "new", "top"] as SortOption[]).map((option) => (
@@ -69,7 +91,6 @@ const Community = () => {
             </span>
           </div>
 
-          {/* Feed */}
           <div className="space-y-4">
             {filteredPosts.map((post) => (
               <PostCard key={post.id} post={post} onClick={() => handlePostClick(post)} />
