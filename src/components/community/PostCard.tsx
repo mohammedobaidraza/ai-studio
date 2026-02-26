@@ -1,6 +1,7 @@
-import { ArrowBigUp, ArrowBigDown, MessageSquare, Bookmark, Share2, MoreHorizontal, ExternalLink } from "lucide-react";
+import { Heart, MessageCircle, Share2, Bookmark, MoreHorizontal } from "lucide-react";
 import { useState } from "react";
 import { CommunityPost } from "@/data/communityData";
+import { motion } from "framer-motion";
 
 interface PostCardProps {
   post: CommunityPost;
@@ -12,95 +13,98 @@ function formatCount(n: number): string {
   return `${n}`;
 }
 
-const PostCard = ({ post, onClick }: PostCardProps) => {
-  const [voteState, setVoteState] = useState<"up" | "down" | null>(null);
-  const [saved, setSaved] = useState(post.saved || false);
+function formatKarma(n: number): string {
+  if (n >= 10000) return `${(n / 1000).toFixed(0)}k`;
+  if (n >= 1000) return `${(n / 1000).toFixed(1)}k`;
+  return `${n}`;
+}
 
-  const score = post.upvotes - post.downvotes + (voteState === "up" ? 1 : voteState === "down" ? -1 : 0);
+const PostCard = ({ post, onClick }: PostCardProps) => {
+  const [liked, setLiked] = useState(false);
+  const [saved, setSaved] = useState(post.saved || false);
+  const [likeCount, setLikeCount] = useState(post.upvotes - post.downvotes);
+
+  const handleLike = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setLiked(!liked);
+    setLikeCount(prev => liked ? prev - 1 : prev + 1);
+  };
 
   return (
-    <div
-      className="bg-white rounded-xl border border-black/[0.06] hover:border-black/[0.12] transition-all duration-200 cursor-pointer group"
+    <motion.div
+      initial={{ opacity: 0, y: 8 }}
+      animate={{ opacity: 1, y: 0 }}
+      whileHover={{ y: -1 }}
+      transition={{ duration: 0.2 }}
+      className="bg-white rounded-2xl border border-black/[0.05] hover:border-black/[0.1] transition-all duration-200 cursor-pointer overflow-hidden"
       onClick={onClick}
     >
-      <div className="flex">
-        {/* Vote Column */}
-        <div className="flex flex-col items-center gap-0.5 py-3 px-3 min-w-[44px]" onClick={(e) => e.stopPropagation()}>
+      <div className="p-5">
+        {/* Author row */}
+        <div className="flex items-center justify-between mb-3">
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-full bg-gradient-to-br from-gray-800 to-gray-600 flex items-center justify-center text-white text-[13px] font-bold shadow-sm">
+              {post.author.avatar}
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="text-[14px] font-semibold text-gray-900">{post.author.name}</span>
+                <span className="text-[11px] text-gray-400 font-medium">{formatKarma(post.author.karma)} rep</span>
+              </div>
+              <div className="flex items-center gap-1.5 text-[11px] text-gray-400">
+                <span>{post.createdAt}</span>
+                <span>·</span>
+                <span className="inline-flex items-center gap-1 px-1.5 py-0.5 bg-gray-100 rounded-md text-[10px] font-medium text-gray-500">
+                  {post.community.icon} {post.community.name}
+                </span>
+              </div>
+            </div>
+          </div>
           <button
-            onClick={() => setVoteState(voteState === "up" ? null : "up")}
-            className={`p-0.5 rounded transition-colors ${
-              voteState === "up" ? "text-orange-500" : "text-gray-400 hover:text-orange-500"
-            }`}
+            onClick={(e) => e.stopPropagation()}
+            className="p-1.5 hover:bg-gray-100 rounded-lg transition-colors"
           >
-            <ArrowBigUp className="w-5 h-5" strokeWidth={voteState === "up" ? 2.5 : 1.5} />
-          </button>
-          <span className={`text-[12px] font-semibold tabular-nums ${
-            voteState === "up" ? "text-orange-500" : voteState === "down" ? "text-blue-500" : "text-gray-600"
-          }`}>
-            {formatCount(score)}
-          </span>
-          <button
-            onClick={() => setVoteState(voteState === "down" ? null : "down")}
-            className={`p-0.5 rounded transition-colors ${
-              voteState === "down" ? "text-blue-500" : "text-gray-400 hover:text-blue-500"
-            }`}
-          >
-            <ArrowBigDown className="w-5 h-5" strokeWidth={voteState === "down" ? 2.5 : 1.5} />
+            <MoreHorizontal className="w-4 h-4 text-gray-400" />
           </button>
         </div>
 
         {/* Content */}
-        <div className="flex-1 py-3 pr-4">
-          {/* Meta */}
-          <div className="flex items-center gap-1.5 text-[11px] text-gray-400 mb-1">
-            <span className="text-[13px]">{post.community.icon}</span>
-            <span className="font-semibold text-gray-600 hover:underline">c/{post.community.name}</span>
-            <span>·</span>
-            <span>Posted by</span>
-            <span className="hover:underline">u/{post.author.name}</span>
-            <span>·</span>
-            <span>{post.createdAt}</span>
-          </div>
+        <h3 className="text-[16px] font-semibold text-gray-900 leading-snug mb-2">
+          {post.title}
+        </h3>
+        <p className="text-[13px] text-gray-500 leading-relaxed line-clamp-2 mb-4">
+          {post.content}
+        </p>
 
-          {/* Title */}
-          <h3 className="text-[15px] font-semibold text-gray-900 leading-snug mb-1 group-hover:text-gray-700 transition-colors">
-            {post.title}
-            {post.type === "link" && (
-              <ExternalLink className="inline w-3.5 h-3.5 ml-1.5 text-gray-400" />
-            )}
-          </h3>
-
-          {/* Preview */}
-          <p className="text-[13px] text-gray-500 line-clamp-2 leading-relaxed mb-2.5">
-            {post.content}
-          </p>
-
-          {/* Actions */}
-          <div className="flex items-center gap-1" onClick={(e) => e.stopPropagation()}>
-            <button className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-[12px] font-medium text-gray-500 hover:bg-black/[0.04] transition-colors">
-              <MessageSquare className="w-4 h-4" />
-              {post.commentCount} Comments
-            </button>
-            <button className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-[12px] font-medium text-gray-500 hover:bg-black/[0.04] transition-colors">
-              <Share2 className="w-4 h-4" />
-              Share
-            </button>
+        {/* Actions */}
+        <div className="flex items-center justify-between pt-3 border-t border-gray-100" onClick={(e) => e.stopPropagation()}>
+          <div className="flex items-center gap-4">
             <button
-              onClick={() => setSaved(!saved)}
-              className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-[12px] font-medium transition-colors ${
-                saved ? "text-yellow-600 bg-yellow-50" : "text-gray-500 hover:bg-black/[0.04]"
+              onClick={handleLike}
+              className={`flex items-center gap-1.5 transition-all duration-200 ${
+                liked ? "text-red-500" : "text-gray-400 hover:text-red-500"
               }`}
             >
-              <Bookmark className="w-4 h-4" fill={saved ? "currentColor" : "none"} />
-              {saved ? "Saved" : "Save"}
+              <Heart className="w-[18px] h-[18px]" fill={liked ? "currentColor" : "none"} strokeWidth={liked ? 0 : 1.5} />
+              <span className="text-[13px] font-medium">{formatCount(likeCount)}</span>
             </button>
-            <button className="p-1.5 rounded-md text-gray-400 hover:bg-black/[0.04] transition-colors">
-              <MoreHorizontal className="w-4 h-4" />
+            <button className="flex items-center gap-1.5 text-gray-400 hover:text-gray-600 transition-colors">
+              <MessageCircle className="w-[18px] h-[18px]" strokeWidth={1.5} />
+              <span className="text-[13px] font-medium">{post.commentCount}</span>
+            </button>
+            <button className="flex items-center gap-1.5 text-gray-400 hover:text-gray-600 transition-colors">
+              <Share2 className="w-[16px] h-[16px]" strokeWidth={1.5} />
             </button>
           </div>
+          <button
+            onClick={() => setSaved(!saved)}
+            className={`transition-colors ${saved ? "text-amber-500" : "text-gray-400 hover:text-gray-600"}`}
+          >
+            <Bookmark className="w-[18px] h-[18px]" fill={saved ? "currentColor" : "none"} strokeWidth={1.5} />
+          </button>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
