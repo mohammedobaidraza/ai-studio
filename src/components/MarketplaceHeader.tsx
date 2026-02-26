@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Bell, MessageCircle, Menu, Plus, Search, Command } from "lucide-react";
 import agentStoreLogo from "@/assets/logos/agentstore.png";
 import PublishAgentModal from "./PublishAgentModal";
@@ -11,6 +12,7 @@ interface MarketplaceHeaderProps {
 
 const MarketplaceHeader = ({ onMenuClick, onLogoClick }: MarketplaceHeaderProps) => {
   const [publishOpen, setPublishOpen] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <>
@@ -81,7 +83,7 @@ const MarketplaceHeader = ({ onMenuClick, onLogoClick }: MarketplaceHeaderProps)
               <span className="hidden sm:inline">Publish</span>
             </button>
 
-            <button className="p-2 hover:bg-black/[0.04] rounded-lg relative transition-all duration-150">
+            <button onClick={() => navigate('/community')} className="p-2 hover:bg-black/[0.04] rounded-lg relative transition-all duration-150">
               <MessageCircle className="w-[18px] h-[18px] text-gray-500" />
             </button>
 

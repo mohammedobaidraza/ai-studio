@@ -6,7 +6,7 @@ import ThreadView from "@/components/community/ThreadView";
 import { posts, CommunityPost } from "@/data/communityData";
 import Footer from "@/components/Footer";
 
-type SortOption = "hot" | "new" | "top" | "controversial";
+type SortOption = "hot" | "new" | "top";
 
 const Community = () => {
   const [selectedFeed, setSelectedFeed] = useState("home");
@@ -17,7 +17,6 @@ const Community = () => {
   const filteredPosts = useMemo(() => {
     let filtered = posts;
 
-    // Filter by community/topic
     if (selectedFeed !== "home" && selectedFeed !== "trending" && selectedFeed !== "saved" && selectedFeed !== "drafts") {
       filtered = posts.filter(p => p.community.name.toLowerCase().replace(/\s/g, "") === selectedFeed);
     }
@@ -25,14 +24,11 @@ const Community = () => {
       filtered = [...posts].sort((a, b) => (b.upvotes - b.downvotes) - (a.upvotes - a.downvotes));
     }
 
-    // Sort
     switch (sortBy) {
       case "new":
         return [...filtered];
       case "top":
         return [...filtered].sort((a, b) => (b.upvotes - b.downvotes) - (a.upvotes - a.downvotes));
-      case "controversial":
-        return [...filtered].sort((a, b) => b.commentCount - a.commentCount);
       case "hot":
       default:
         return [...filtered].sort((a, b) => (b.upvotes + b.commentCount) - (a.upvotes + a.commentCount));
@@ -44,51 +40,51 @@ const Community = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#f8f8f7]">
+    <div className="min-h-screen bg-gray-50">
       <CommunityHeader onMenuClick={() => setMobileMenuOpen(!mobileMenuOpen)} />
 
       <div className="flex">
         <CommunitySidebar selectedFeed={selectedFeed} onFeedSelect={setSelectedFeed} />
 
-        <main className="flex-1 p-5 lg:p-7 max-w-3xl">
-          {/* Sort bar */}
-          <div className="flex items-center justify-between mb-5">
-            <div className="flex items-center gap-1 bg-white rounded-lg border border-black/[0.06] p-0.5">
-              {(["hot", "new", "top", "controversial"] as SortOption[]).map((option) => (
+        <main className="flex-1 py-6 px-5 lg:px-8 max-w-2xl">
+          {/* Sort */}
+          <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center gap-1 bg-white rounded-xl border border-gray-200 p-1">
+              {(["hot", "new", "top"] as SortOption[]).map((option) => (
                 <button
                   key={option}
                   onClick={() => setSortBy(option)}
-                  className={`px-3 py-1.5 rounded-md text-[12px] font-medium capitalize transition-all duration-150 ${
+                  className={`px-4 py-1.5 rounded-lg text-[12px] font-medium capitalize transition-all duration-150 ${
                     sortBy === option
-                      ? "bg-gray-900 text-white shadow-sm"
-                      : "text-gray-500 hover:text-gray-700 hover:bg-black/[0.03]"
+                      ? "bg-gray-900 text-white"
+                      : "text-gray-500 hover:text-gray-700 hover:bg-gray-50"
                   }`}
                 >
                   {option}
                 </button>
               ))}
             </div>
-            <span className="text-[12px] text-gray-400">
+            <span className="text-[12px] text-gray-400 font-medium">
               {filteredPosts.length} posts
             </span>
           </div>
 
-          {/* Posts */}
-          <div className="space-y-3">
+          {/* Feed */}
+          <div className="space-y-4">
             {filteredPosts.map((post) => (
               <PostCard key={post.id} post={post} onClick={() => handlePostClick(post)} />
             ))}
           </div>
 
           {filteredPosts.length === 0 && (
-            <div className="text-center py-20">
-              <p className="text-gray-400 text-[14px]">No posts yet in this community</p>
+            <div className="text-center py-24">
+              <p className="text-gray-400 text-[15px] font-medium">Nothing here yet</p>
+              <p className="text-gray-300 text-[13px] mt-1">Be the first to post</p>
             </div>
           )}
         </main>
       </div>
 
-      {/* Thread View */}
       {selectedPost && (
         <ThreadView post={selectedPost} onClose={() => setSelectedPost(null)} />
       )}

@@ -1,6 +1,7 @@
-import { ArrowBigUp, ArrowBigDown, MessageSquare, Share2, Bookmark, MoreHorizontal, X, ChevronDown, ChevronUp } from "lucide-react";
+import { Heart, MessageCircle, Share2, Bookmark, MoreHorizontal, X, ChevronDown, ChevronRight } from "lucide-react";
 import { useState } from "react";
 import { CommunityPost, Comment, commentsForPost } from "@/data/communityData";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface ThreadViewProps {
   post: CommunityPost;
@@ -13,95 +14,86 @@ function formatCount(n: number): string {
 }
 
 const CommentNode = ({ comment, depth = 0 }: { comment: Comment; depth?: number }) => {
-  const [voteState, setVoteState] = useState<"up" | "down" | null>(null);
+  const [liked, setLiked] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
   const [replying, setReplying] = useState(false);
-
-  const score = comment.upvotes - comment.downvotes + (voteState === "up" ? 1 : voteState === "down" ? -1 : 0);
+  const score = comment.upvotes - comment.downvotes + (liked ? 1 : 0);
 
   return (
-    <div className={`${depth > 0 ? "ml-4 pl-4 border-l-2 border-black/[0.04] hover:border-black/[0.08]" : ""} transition-colors`}>
-      <div className="py-2">
-        {/* Comment header */}
-        <div className="flex items-center gap-1.5 mb-1">
-          <button onClick={() => setCollapsed(!collapsed)} className="p-0.5 -ml-1">
-            {collapsed ? <ChevronDown className="w-3 h-3 text-gray-400" /> : <ChevronUp className="w-3 h-3 text-gray-400" />}
-          </button>
-          <div className="w-5 h-5 rounded-full bg-gray-200 flex items-center justify-center text-[10px] font-bold text-gray-500">
+    <div className={`${depth > 0 ? "ml-6 pl-5 border-l border-gray-100" : ""}`}>
+      <div className="py-3">
+        {/* Header */}
+        <div className="flex items-center gap-2.5 mb-2">
+          <div className="w-7 h-7 rounded-full bg-gradient-to-br from-gray-700 to-gray-500 flex items-center justify-center text-white text-[10px] font-bold">
             {comment.author.avatar}
           </div>
-          <span className="text-[12px] font-semibold text-gray-700">u/{comment.author.name}</span>
-          <span className="text-[11px] text-gray-400">·</span>
+          <span className="text-[13px] font-semibold text-gray-900">{comment.author.name}</span>
           <span className="text-[11px] text-gray-400">{comment.createdAt}</span>
-          <span className="text-[11px] text-gray-400">·</span>
-          <span className="text-[11px] text-gray-400">{formatCount(comment.author.karma)} karma</span>
+          {comment.children.length > 0 && (
+            <button onClick={() => setCollapsed(!collapsed)} className="p-0.5 hover:bg-gray-100 rounded transition-colors">
+              {collapsed ? <ChevronRight className="w-3.5 h-3.5 text-gray-400" /> : <ChevronDown className="w-3.5 h-3.5 text-gray-400" />}
+            </button>
+          )}
         </div>
 
-        {!collapsed && (
-          <>
-            {/* Content */}
-            <p className="text-[13px] text-gray-700 leading-relaxed mb-1.5 pl-6">{comment.content}</p>
+        {/* Content */}
+        <p className="text-[14px] text-gray-700 leading-relaxed mb-2.5 pl-[38px]">{comment.content}</p>
 
-            {/* Actions */}
-            <div className="flex items-center gap-0.5 pl-5">
-              <button
-                onClick={() => setVoteState(voteState === "up" ? null : "up")}
-                className={`p-1 rounded transition-colors ${voteState === "up" ? "text-orange-500" : "text-gray-400 hover:text-orange-500"}`}
-              >
-                <ArrowBigUp className="w-4 h-4" strokeWidth={voteState === "up" ? 2.5 : 1.5} />
-              </button>
-              <span className={`text-[11px] font-semibold tabular-nums min-w-[20px] text-center ${
-                voteState === "up" ? "text-orange-500" : voteState === "down" ? "text-blue-500" : "text-gray-500"
-              }`}>
-                {formatCount(score)}
-              </span>
-              <button
-                onClick={() => setVoteState(voteState === "down" ? null : "down")}
-                className={`p-1 rounded transition-colors ${voteState === "down" ? "text-blue-500" : "text-gray-400 hover:text-blue-500"}`}
-              >
-                <ArrowBigDown className="w-4 h-4" strokeWidth={voteState === "down" ? 2.5 : 1.5} />
-              </button>
-              <button
-                onClick={() => setReplying(!replying)}
-                className="flex items-center gap-1 px-2 py-1 rounded text-[11px] font-medium text-gray-500 hover:bg-black/[0.04] transition-colors ml-1"
-              >
-                <MessageSquare className="w-3.5 h-3.5" />
-                Reply
-              </button>
-              <button className="p-1 rounded text-gray-400 hover:bg-black/[0.04] transition-colors">
-                <MoreHorizontal className="w-3.5 h-3.5" />
-              </button>
-            </div>
+        {/* Actions */}
+        <div className="flex items-center gap-4 pl-[38px]">
+          <button
+            onClick={() => setLiked(!liked)}
+            className={`flex items-center gap-1 text-[12px] transition-colors ${liked ? "text-red-500" : "text-gray-400 hover:text-red-500"}`}
+          >
+            <Heart className="w-3.5 h-3.5" fill={liked ? "currentColor" : "none"} strokeWidth={liked ? 0 : 1.5} />
+            <span className="font-medium">{formatCount(score)}</span>
+          </button>
+          <button
+            onClick={() => setReplying(!replying)}
+            className="flex items-center gap-1 text-[12px] text-gray-400 hover:text-gray-600 font-medium transition-colors"
+          >
+            <MessageCircle className="w-3.5 h-3.5" />
+            Reply
+          </button>
+          <button className="p-0.5 text-gray-400 hover:text-gray-600 transition-colors">
+            <MoreHorizontal className="w-3.5 h-3.5" />
+          </button>
+        </div>
 
-            {/* Reply input */}
-            {replying && (
-              <div className="pl-6 mt-2 mb-1">
-                <textarea
-                  placeholder="Write a reply..."
-                  className="w-full p-2.5 text-[13px] bg-black/[0.02] border border-black/[0.06] rounded-lg resize-none focus:outline-none focus:ring-1 focus:ring-black/[0.08] placeholder:text-gray-400"
-                  rows={3}
-                  autoFocus
-                />
-                <div className="flex items-center gap-2 mt-1.5">
-                  <button className="px-3 py-1.5 bg-gray-900 text-white text-[12px] font-medium rounded-lg hover:bg-gray-800 transition-colors">
-                    Reply
-                  </button>
-                  <button onClick={() => setReplying(false)} className="px-3 py-1.5 text-[12px] font-medium text-gray-500 hover:bg-black/[0.04] rounded-lg transition-colors">
-                    Cancel
-                  </button>
-                </div>
+        {/* Reply input */}
+        <AnimatePresence>
+          {replying && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              className="pl-[38px] mt-3 overflow-hidden"
+            >
+              <textarea
+                placeholder="Write a reply..."
+                className="w-full p-3 text-[13px] bg-gray-50 border border-gray-200 rounded-xl resize-none focus:outline-none focus:ring-2 focus:ring-gray-200 focus:bg-white placeholder:text-gray-400 transition-all"
+                rows={3}
+                autoFocus
+              />
+              <div className="flex items-center gap-2 mt-2">
+                <button className="px-4 py-1.5 bg-gray-900 text-white text-[12px] font-medium rounded-lg hover:bg-gray-800 transition-colors">
+                  Reply
+                </button>
+                <button onClick={() => setReplying(false)} className="px-3 py-1.5 text-[12px] font-medium text-gray-500 hover:bg-gray-100 rounded-lg transition-colors">
+                  Cancel
+                </button>
               </div>
-            )}
+            </motion.div>
+          )}
+        </AnimatePresence>
 
-            {/* Children */}
-            {comment.children.length > 0 && (
-              <div className="mt-1">
-                {comment.children.map(child => (
-                  <CommentNode key={child.id} comment={child} depth={depth + 1} />
-                ))}
-              </div>
-            )}
-          </>
+        {/* Children */}
+        {!collapsed && comment.children.length > 0 && (
+          <div className="mt-1">
+            {comment.children.map(child => (
+              <CommentNode key={child.id} comment={child} depth={depth + 1} />
+            ))}
+          </div>
         )}
       </div>
     </div>
@@ -109,103 +101,114 @@ const CommentNode = ({ comment, depth = 0 }: { comment: Comment; depth?: number 
 };
 
 const ThreadView = ({ post, onClose }: ThreadViewProps) => {
-  const [postVote, setPostVote] = useState<"up" | "down" | null>(null);
-  const postScore = post.upvotes - post.downvotes + (postVote === "up" ? 1 : postVote === "down" ? -1 : 0);
+  const [liked, setLiked] = useState(false);
+  const [saved, setSaved] = useState(false);
+  const likeCount = post.upvotes - post.downvotes + (liked ? 1 : 0);
   const comments = commentsForPost[post.id] || [];
 
   return (
-    <div className="fixed inset-0 z-50 flex justify-center bg-black/40 backdrop-blur-sm" onClick={onClose}>
-      <div
-        className="w-full max-w-3xl bg-[#f8f8f7] h-full overflow-y-auto"
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 z-50 flex justify-center bg-black/30 backdrop-blur-sm"
+      onClick={onClose}
+    >
+      <motion.div
+        initial={{ y: 40, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ type: "spring", damping: 30, stiffness: 300 }}
+        className="w-full max-w-2xl bg-white h-full overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Close bar */}
-        <div className="sticky top-0 z-10 flex items-center justify-between px-5 py-3 bg-[#f8f8f7]/95 backdrop-blur-md border-b border-black/[0.06]">
-          <div className="flex items-center gap-1.5 text-[12px] text-gray-500">
-            <span className="text-[14px]">{post.community.icon}</span>
-            <span className="font-semibold text-gray-700">c/{post.community.name}</span>
-          </div>
-          <button onClick={onClose} className="p-1.5 hover:bg-black/[0.04] rounded-lg transition-colors">
+        {/* Header bar */}
+        <div className="sticky top-0 z-10 flex items-center justify-between px-6 py-4 bg-white/95 backdrop-blur-md border-b border-gray-100">
+          <span className="text-[14px] font-semibold text-gray-900">Thread</span>
+          <button onClick={onClose} className="p-2 hover:bg-gray-100 rounded-xl transition-colors">
             <X className="w-5 h-5 text-gray-500" />
           </button>
         </div>
 
-        <div className="max-w-2xl mx-auto px-5 py-6">
-          {/* Post header */}
-          <div className="mb-4">
-            <div className="flex items-center gap-1.5 text-[11px] text-gray-400 mb-2">
-              <span>Posted by u/{post.author.name}</span>
-              <span>·</span>
-              <span>{post.createdAt}</span>
-              <span>·</span>
-              <span>{formatCount(post.author.karma)} karma</span>
+        <div className="px-6 py-6 max-w-xl mx-auto">
+          {/* Author */}
+          <div className="flex items-center gap-3 mb-5">
+            <div className="w-11 h-11 rounded-full bg-gradient-to-br from-gray-800 to-gray-600 flex items-center justify-center text-white text-[15px] font-bold shadow-sm">
+              {post.author.avatar}
             </div>
-            <h1 className="text-[22px] font-bold text-gray-900 leading-tight mb-3">{post.title}</h1>
-            <p className="text-[14px] text-gray-600 leading-relaxed whitespace-pre-line">{post.content}</p>
+            <div>
+              <span className="text-[15px] font-semibold text-gray-900">{post.author.name}</span>
+              <div className="flex items-center gap-1.5 text-[12px] text-gray-400">
+                <span>{post.createdAt}</span>
+                <span>·</span>
+                <span className="inline-flex items-center gap-1 px-1.5 py-0.5 bg-gray-100 rounded-md text-[10px] font-medium text-gray-500">
+                  {post.community.icon} {post.community.name}
+                </span>
+              </div>
+            </div>
           </div>
 
-          {/* Post actions */}
-          <div className="flex items-center gap-1 py-2 border-y border-black/[0.04] mb-6">
-            <div className="flex items-center gap-0.5">
+          {/* Post */}
+          <h1 className="text-[22px] font-bold text-gray-900 leading-tight mb-3">{post.title}</h1>
+          <p className="text-[15px] text-gray-600 leading-relaxed whitespace-pre-line mb-6">{post.content}</p>
+
+          {/* Actions */}
+          <div className="flex items-center justify-between py-4 border-y border-gray-100 mb-8">
+            <div className="flex items-center gap-5">
               <button
-                onClick={() => setPostVote(postVote === "up" ? null : "up")}
-                className={`p-1 rounded transition-colors ${postVote === "up" ? "text-orange-500" : "text-gray-400 hover:text-orange-500"}`}
+                onClick={() => setLiked(!liked)}
+                className={`flex items-center gap-1.5 transition-all ${liked ? "text-red-500" : "text-gray-400 hover:text-red-500"}`}
               >
-                <ArrowBigUp className="w-5 h-5" strokeWidth={postVote === "up" ? 2.5 : 1.5} />
+                <Heart className="w-5 h-5" fill={liked ? "currentColor" : "none"} strokeWidth={liked ? 0 : 1.5} />
+                <span className="text-[14px] font-medium">{formatCount(likeCount)}</span>
               </button>
-              <span className={`text-[13px] font-semibold tabular-nums ${
-                postVote === "up" ? "text-orange-500" : postVote === "down" ? "text-blue-500" : "text-gray-600"
-              }`}>
-                {formatCount(postScore)}
-              </span>
-              <button
-                onClick={() => setPostVote(postVote === "down" ? null : "down")}
-                className={`p-1 rounded transition-colors ${postVote === "down" ? "text-blue-500" : "text-gray-400 hover:text-blue-500"}`}
-              >
-                <ArrowBigDown className="w-5 h-5" strokeWidth={postVote === "down" ? 2.5 : 1.5} />
+              <div className="flex items-center gap-1.5 text-gray-400">
+                <MessageCircle className="w-5 h-5" strokeWidth={1.5} />
+                <span className="text-[14px] font-medium">{post.commentCount}</span>
+              </div>
+              <button className="text-gray-400 hover:text-gray-600 transition-colors">
+                <Share2 className="w-[18px] h-[18px]" strokeWidth={1.5} />
               </button>
             </div>
-            <button className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-[12px] font-medium text-gray-500 hover:bg-black/[0.04] transition-colors">
-              <MessageSquare className="w-4 h-4" />
-              {post.commentCount}
-            </button>
-            <button className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-[12px] font-medium text-gray-500 hover:bg-black/[0.04] transition-colors">
-              <Share2 className="w-4 h-4" />
-              Share
-            </button>
-            <button className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-[12px] font-medium text-gray-500 hover:bg-black/[0.04] transition-colors">
-              <Bookmark className="w-4 h-4" />
-              Save
+            <button
+              onClick={() => setSaved(!saved)}
+              className={`transition-colors ${saved ? "text-amber-500" : "text-gray-400 hover:text-gray-600"}`}
+            >
+              <Bookmark className="w-5 h-5" fill={saved ? "currentColor" : "none"} strokeWidth={1.5} />
             </button>
           </div>
 
           {/* Comment input */}
-          <div className="mb-6">
+          <div className="mb-8">
             <textarea
-              placeholder="What are your thoughts?"
-              className="w-full p-3 text-[13px] bg-white border border-black/[0.06] rounded-xl resize-none focus:outline-none focus:ring-1 focus:ring-black/[0.08] placeholder:text-gray-400 transition-all"
-              rows={4}
+              placeholder="Share your thoughts..."
+              className="w-full p-4 text-[14px] bg-gray-50 border border-gray-200 rounded-2xl resize-none focus:outline-none focus:ring-2 focus:ring-gray-200 focus:bg-white placeholder:text-gray-400 transition-all"
+              rows={3}
             />
             <div className="flex justify-end mt-2">
-              <button className="px-4 py-2 bg-gray-900 text-white text-[13px] font-medium rounded-lg hover:bg-gray-800 transition-colors">
-                Comment
+              <button className="px-5 py-2 bg-gray-900 text-white text-[13px] font-medium rounded-xl hover:bg-gray-800 transition-colors">
+                Reply
               </button>
             </div>
           </div>
 
           {/* Comments */}
+          <div className="mb-4">
+            <span className="text-[13px] font-semibold text-gray-500 uppercase tracking-wider">
+              {comments.length > 0 ? `${post.commentCount} Replies` : "No replies yet"}
+            </span>
+          </div>
           <div>
             {comments.length > 0 ? (
               comments.map(comment => (
                 <CommentNode key={comment.id} comment={comment} />
               ))
             ) : (
-              <p className="text-center text-[13px] text-gray-400 py-8">No comments yet. Be the first to comment.</p>
+              <p className="text-center text-[14px] text-gray-400 py-12">Be the first to share your thoughts.</p>
             )}
           </div>
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 };
 
