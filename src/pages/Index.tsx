@@ -1,6 +1,7 @@
 import { useState, useCallback, useMemo, ChangeEvent } from "react";
-import MarketplaceHeader from "@/components/MarketplaceHeader";
+import { Menu } from "lucide-react";
 import MarketplaceSidebar from "@/components/MarketplaceSidebar";
+import agentStoreLogo from "@/assets/logos/agentstore.png";
 import MarketplaceCard from "@/components/MarketplaceCard";
 import MobileFilterDrawer from "@/components/MobileFilterDrawer";
 import AgentDetail from "@/components/AgentDetail";
@@ -79,7 +80,19 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-[#f8f8f7]">
-      <MarketplaceHeader onMenuClick={() => setMobileMenuOpen(true)} onLogoClick={() => handleCategorySelect(null)} />
+      {/* Centered Logo Bar */}
+      <div className="sticky top-0 z-50 flex items-center justify-center h-14 bg-[#f8f8f7]/90 backdrop-blur-md border-b border-black/[0.04]">
+        <button
+          onClick={() => setMobileMenuOpen(true)}
+          className="lg:hidden absolute left-4 p-2 hover:bg-black/[0.04] rounded-xl transition-all"
+        >
+          <Menu className="w-5 h-5 text-gray-700" />
+        </button>
+        <button onClick={() => handleCategorySelect(null)} className="flex items-center gap-2">
+          <img src={agentStoreLogo} alt="Agent Store" className="w-7 h-7 rounded-lg" />
+          <span className="text-[15px] font-bold text-gray-900 tracking-tight">Agent Store</span>
+        </button>
+      </div>
 
       <div className="flex">
         <MarketplaceSidebar 

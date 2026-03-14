@@ -1,5 +1,5 @@
 import { useState, useMemo, useCallback } from "react";
-import CommunityHeader from "@/components/community/CommunityHeader";
+import { Menu } from "lucide-react";
 import CommunitySidebar from "@/components/community/CommunitySidebar";
 import PostCard from "@/components/community/PostCard";
 import ThreadView from "@/components/community/ThreadView";
@@ -64,7 +64,16 @@ const Community = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <CommunityHeader onMenuClick={() => setMobileMenuOpen(!mobileMenuOpen)} onCreatePost={handleCreatePost} />
+      {/* Centered Logo Bar */}
+      <div className="sticky top-0 z-50 flex items-center justify-center h-14 bg-gray-50/90 backdrop-blur-md border-b border-black/[0.04]">
+        <button
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          className="lg:hidden absolute left-4 p-2 hover:bg-black/[0.04] rounded-xl transition-all"
+        >
+          <Menu className="w-5 h-5 text-gray-700" />
+        </button>
+        <span className="text-[15px] font-bold text-gray-900 tracking-tight">Community</span>
+      </div>
 
       <div className="flex">
         <CommunitySidebar selectedFeed={selectedFeed} onFeedSelect={setSelectedFeed} />
