@@ -1,6 +1,7 @@
 import { useState, useCallback, useMemo, ChangeEvent } from "react";
-import MarketplaceHeader from "@/components/MarketplaceHeader";
+import { Menu } from "lucide-react";
 import MarketplaceSidebar from "@/components/MarketplaceSidebar";
+import agentStoreLogo from "@/assets/logos/agentstore.png";
 import MarketplaceCard from "@/components/MarketplaceCard";
 import MobileFilterDrawer from "@/components/MobileFilterDrawer";
 import AgentDetail from "@/components/AgentDetail";
