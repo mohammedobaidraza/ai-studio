@@ -1,5 +1,5 @@
 import { useState, useMemo, useCallback } from "react";
-import CommunityHeader from "@/components/community/CommunityHeader";
+import { Menu } from "lucide-react";
 import CommunitySidebar from "@/components/community/CommunitySidebar";
 import PostCard from "@/components/community/PostCard";
 import ThreadView from "@/components/community/ThreadView";
