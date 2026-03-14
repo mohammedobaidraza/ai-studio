@@ -20,7 +20,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
-          <div className="pb-20 md:pb-0">
+          <div className="pb-20">
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/community" element={<Community />} />
