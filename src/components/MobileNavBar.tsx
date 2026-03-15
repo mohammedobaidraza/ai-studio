@@ -19,12 +19,8 @@ const MobileNavBar = () => {
       <div
         className="w-full max-w-[360px] md:max-w-[400px] rounded-2xl px-1.5 py-1.5 flex items-center justify-around pointer-events-auto"
         style={{
-          background: "rgba(240, 242, 245, 0.92)",
-          backdropFilter: "blur(80px) saturate(1.2)",
-          WebkitBackdropFilter: "blur(80px) saturate(1.2)",
-          border: "1px solid rgba(255, 255, 255, 0.7)",
-          boxShadow:
-            "0 2px 20px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.9)",
+          background: "hsl(220 6% 90%)",
+          boxShadow: "8px 8px 16px rgba(163,168,178,0.5), -8px -8px 16px rgba(255,255,255,0.7), inset 0 1px 0 rgba(255,255,255,0.5)",
         }}
       >
         {navItems.map(({ icon: Icon, label, path }) => {
@@ -33,7 +29,7 @@ const MobileNavBar = () => {
             <button
               key={path}
               onClick={() => navigate(path)}
-              className="relative flex flex-col items-center justify-center w-[56px] h-[46px] rounded-xl transition-colors duration-150"
+              className="relative flex flex-col items-center justify-center w-[56px] h-[46px] rounded-xl transition-all duration-150"
               aria-label={label}
             >
               {isActive && (
@@ -41,22 +37,20 @@ const MobileNavBar = () => {
                   layoutId="nav-active-pill"
                   className="absolute inset-[3px] rounded-[10px]"
                   style={{
-                    background: "rgba(0, 0, 0, 0.055)",
-                    boxShadow: "inset 0 1px 2px rgba(0,0,0,0.04)",
+                    background: "hsl(220 6% 90%)",
+                    boxShadow: "inset 2px 2px 4px rgba(163,168,178,0.5), inset -2px -2px 4px rgba(255,255,255,0.7)",
                   }}
                   transition={{ type: "spring", stiffness: 500, damping: 35 }}
                 />
               )}
               <Icon
-                className={`relative z-10 w-[19px] h-[19px] transition-colors duration-150 ${
-                  isActive ? "text-gray-800" : "text-gray-400"
-                }`}
+                className="relative z-10 w-[19px] h-[19px] transition-colors duration-150"
+                style={{ color: isActive ? "hsl(220 15% 22%)" : "hsl(220 8% 60%)" }}
                 strokeWidth={1.5}
               />
               <span
-                className={`relative z-10 text-[9px] mt-[2px] font-medium tracking-[0.02em] transition-colors duration-150 ${
-                  isActive ? "text-gray-700" : "text-gray-400"
-                }`}
+                className="relative z-10 text-[9px] mt-[2px] font-medium tracking-[0.02em] transition-colors duration-150"
+                style={{ color: isActive ? "hsl(220 15% 28%)" : "hsl(220 8% 60%)" }}
               >
                 {label}
               </span>

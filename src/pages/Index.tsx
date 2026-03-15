@@ -45,7 +45,6 @@ const Index = () => {
     return filteredAgents.slice(start, start + ITEMS_PER_PAGE);
   }, [filteredAgents, currentPage]);
 
-  // Reset page when category changes
   const handleCategorySelect = useCallback((category: string | null) => {
     setSelectedCategory(category);
     setCurrentPage(1);
@@ -79,18 +78,24 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#f8f8f7]">
-      {/* Centered Logo Bar */}
-      <div className="sticky top-0 z-50 flex items-center justify-center h-14 bg-[#f8f8f7]/90 backdrop-blur-md border-b border-black/[0.04]">
+    <div className="min-h-screen" style={{ background: "hsl(220 6% 90%)" }}>
+      {/* Neumorphic Logo Bar */}
+      <div className="sticky top-0 z-50 flex items-center justify-center h-14"
+        style={{
+          background: "hsl(220 6% 90%)",
+          boxShadow: "0 4px 8px rgba(163,168,178,0.25), 0 -2px 4px rgba(255,255,255,0.5) inset",
+        }}
+      >
         <button
           onClick={() => setMobileMenuOpen(true)}
-          className="lg:hidden absolute left-4 p-2 hover:bg-black/[0.04] rounded-xl transition-all"
+          className="lg:hidden absolute left-4 p-2 rounded-xl transition-all"
+          style={{ color: "hsl(220 10% 35%)" }}
         >
-          <Menu className="w-5 h-5 text-gray-700" />
+          <Menu className="w-5 h-5" />
         </button>
         <button onClick={() => handleCategorySelect(null)} className="flex items-center gap-2">
           <img src={agentStoreLogo} alt="Agent Store" className="w-7 h-7 rounded-lg" />
-          <span className="text-[15px] font-bold text-gray-900 tracking-tight">Agent Store</span>
+          <span className="text-[15px] font-bold tracking-tight" style={{ color: "hsl(220 15% 22%)" }}>Agent Store</span>
         </button>
       </div>
 
@@ -111,26 +116,33 @@ const Index = () => {
           <div className="mb-5 flex items-center justify-between">
             <div>
               <div className="flex items-center gap-2">
-                <h2 className="text-[22px] font-bold text-gray-900 tracking-tight">
+                <h2 className="text-[22px] font-bold tracking-tight" style={{ color: "hsl(220 15% 22%)" }}>
                   {selectedCategory ? `${selectedCategory}` : "Today's picks"}
                 </h2>
                 {selectedCategory && (
                   <button
                     onClick={() => handleCategorySelect(null)}
-                    className="text-[12px] font-medium text-gray-400 hover:text-gray-600 transition-colors ml-1"
+                    className="text-[12px] font-medium transition-colors ml-1"
+                    style={{ color: "hsl(220 8% 55%)" }}
                   >
                     ← All
                   </button>
                 )}
               </div>
-              <p className="text-[13px] text-gray-400 mt-0.5">
+              <p className="text-[13px] mt-0.5" style={{ color: "hsl(220 8% 55%)" }}>
                 1M+ agents available · Page {currentPage} of {totalPages}
               </p>
             </div>
             <select 
               value={sortBy}
               onChange={(e: ChangeEvent<HTMLSelectElement>) => { setSortBy(e.target.value); setCurrentPage(1); }}
-              className="px-3 py-2 bg-white border border-black/[0.06] rounded-lg text-[13px] focus:outline-none focus:ring-1 focus:ring-black/[0.08] text-gray-600 transition-all appearance-none pr-8 cursor-pointer hover:border-black/[0.12]"
+              className="px-3 py-2 rounded-xl text-[13px] focus:outline-none transition-all appearance-none pr-8 cursor-pointer"
+              style={{
+                background: "hsl(220 6% 90%)",
+                boxShadow: "3px 3px 6px rgba(163,168,178,0.5), -3px -3px 6px rgba(255,255,255,0.7)",
+                color: "hsl(220 8% 45%)",
+                border: "none",
+              }}
             >
               <option value="popular">Most Popular</option>
               <option value="rated">Highest Rated</option>
@@ -139,7 +151,7 @@ const Index = () => {
             </select>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-5">
             {paginatedAgents.map((agent) => (
               <MarketplaceCard
                 key={agent.id}
@@ -155,22 +167,32 @@ const Index = () => {
               <button
                 onClick={() => { setCurrentPage(p => Math.max(1, p - 1)); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
                 disabled={currentPage === 1}
-                className="flex items-center gap-1 px-3 py-2 text-[13px] font-medium rounded-lg transition-colors disabled:opacity-30 disabled:cursor-not-allowed hover:bg-black/[0.04] text-gray-600"
+                className="flex items-center gap-1 px-3 py-2 text-[13px] font-medium rounded-xl transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+                style={{
+                  color: "hsl(220 8% 45%)",
+                  background: "hsl(220 6% 90%)",
+                  boxShadow: "3px 3px 6px rgba(163,168,178,0.4), -3px -3px 6px rgba(255,255,255,0.6)",
+                }}
               >
                 <ChevronLeft className="w-4 h-4" /> Prev
               </button>
               {getPageNumbers().map((page, i) =>
                 page === "ellipsis" ? (
-                  <span key={`e${i}`} className="px-2 text-gray-400 text-[13px]">…</span>
+                  <span key={`e${i}`} className="px-2 text-[13px]" style={{ color: "hsl(220 8% 55%)" }}>…</span>
                 ) : (
                   <button
                     key={page}
                     onClick={() => { setCurrentPage(page); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                    className={`w-9 h-9 rounded-lg text-[13px] font-medium transition-colors ${
-                      currentPage === page
-                        ? "bg-gray-900 text-white shadow-sm"
-                        : "hover:bg-black/[0.04] text-gray-600"
-                    }`}
+                    className="w-9 h-9 rounded-xl text-[13px] font-medium transition-all"
+                    style={currentPage === page ? {
+                      background: "hsl(220 6% 90%)",
+                      boxShadow: "inset 3px 3px 6px rgba(163,168,178,0.5), inset -3px -3px 6px rgba(255,255,255,0.7)",
+                      color: "hsl(220 15% 22%)",
+                    } : {
+                      background: "hsl(220 6% 90%)",
+                      boxShadow: "3px 3px 6px rgba(163,168,178,0.4), -3px -3px 6px rgba(255,255,255,0.6)",
+                      color: "hsl(220 8% 50%)",
+                    }}
                   >
                     {page}
                   </button>
@@ -179,7 +201,12 @@ const Index = () => {
               <button
                 onClick={() => { setCurrentPage(p => Math.min(totalPages, p + 1)); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
                 disabled={currentPage === totalPages}
-                className="flex items-center gap-1 px-3 py-2 text-[13px] font-medium rounded-lg transition-colors disabled:opacity-30 disabled:cursor-not-allowed hover:bg-black/[0.04] text-gray-600"
+                className="flex items-center gap-1 px-3 py-2 text-[13px] font-medium rounded-xl transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+                style={{
+                  color: "hsl(220 8% 45%)",
+                  background: "hsl(220 6% 90%)",
+                  boxShadow: "3px 3px 6px rgba(163,168,178,0.4), -3px -3px 6px rgba(255,255,255,0.6)",
+                }}
               >
                 Next <ChevronRight className="w-4 h-4" />
               </button>
@@ -188,10 +215,11 @@ const Index = () => {
 
           {filteredAgents.length === 0 && (
             <div className="text-center py-20">
-              <p className="text-gray-400 text-base">No agents found in this category</p>
+              <p className="text-base" style={{ color: "hsl(220 8% 55%)" }}>No agents found in this category</p>
               <button 
                 onClick={() => handleCategorySelect(null)}
-                className="mt-3 text-[13px] font-medium text-gray-900 hover:text-gray-600 transition-colors"
+                className="mt-3 text-[13px] font-medium transition-colors"
+                style={{ color: "hsl(220 15% 22%)" }}
               >
                 ← Browse all agents
               </button>
@@ -200,7 +228,6 @@ const Index = () => {
         </main>
       </div>
 
-      {/* Agent Detail Modal */}
       <AgentDetail
         agent={selectedAgent}
         isOpen={detailOpen}
@@ -208,7 +235,6 @@ const Index = () => {
         onLaunch={handleLaunch}
       />
 
-      {/* Launch Panel */}
       <LaunchPanel
         agent={selectedAgent}
         isOpen={launchOpen}
