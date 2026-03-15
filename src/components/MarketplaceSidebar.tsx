@@ -1,7 +1,6 @@
 import { useMemo, useState } from "react";
 import { Search, SlidersHorizontal } from "lucide-react";
 import { getCategories } from "@/data/categories";
-import GlassSurface from "./GlassSurface";
 
 interface MarketplaceSidebarProps {
   selectedCategory: string | null;
@@ -10,7 +9,6 @@ interface MarketplaceSidebarProps {
 
 const MarketplaceSidebar = ({ selectedCategory, onCategorySelect }: MarketplaceSidebarProps) => {
   const [filterText, setFilterText] = useState("");
-
   const categories = useMemo(() => getCategories(), []);
 
   const filteredCategories = useMemo(() => {
@@ -19,39 +17,34 @@ const MarketplaceSidebar = ({ selectedCategory, onCategorySelect }: MarketplaceS
   }, [categories, filterText]);
 
   return (
-    <aside className="w-[260px] h-[calc(100vh-60px)] border-r border-black/[0.04] overflow-y-auto sticky top-[60px] hidden lg:block bg-transparent">
+    <aside className="w-[260px] h-[calc(100vh-60px)] overflow-y-auto sticky top-[60px] hidden lg:block"
+      style={{ background: "hsl(220 6% 90%)" }}
+    >
       <div className="p-4 pt-5">
-        {/* Glass Search Box */}
-        <GlassSurface
-          width="100%"
-          height={40}
-          borderRadius={12}
-          brightness={55}
-          opacity={0.9}
-          blur={10}
-          backgroundOpacity={0.1}
-          saturation={1.1}
-          className="mb-5"
+        {/* Neumorphic Search */}
+        <div className="relative mb-5 rounded-xl"
+          style={{
+            background: "hsl(220 6% 90%)",
+            boxShadow: "inset 3px 3px 6px rgba(163,168,178,0.5), inset -3px -3px 6px rgba(255,255,255,0.7)",
+          }}
         >
-          <div className="relative w-full h-full flex items-center">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-[14px] h-[14px] text-gray-400" />
-            <input
-              type="text"
-              placeholder="Filter categories..."
-              value={filterText}
-              onChange={(e) => setFilterText(e.target.value)}
-              className="w-full h-full pl-9 pr-4 bg-transparent rounded-xl text-[13px] focus:outline-none placeholder:text-gray-400 transition-all duration-200"
-            />
-          </div>
-        </GlassSurface>
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-[14px] h-[14px]" style={{ color: "hsl(220 8% 55%)" }} />
+          <input
+            type="text"
+            placeholder="Filter categories..."
+            value={filterText}
+            onChange={(e) => setFilterText(e.target.value)}
+            className="w-full h-10 pl-9 pr-4 bg-transparent rounded-xl text-[13px] focus:outline-none placeholder:text-muted-foreground transition-all duration-200"
+          />
+        </div>
 
         {/* Section Label */}
         <div className="flex items-center justify-between mb-2 px-1">
-          <span className="text-[11px] font-semibold text-gray-400 uppercase tracking-[0.08em]">Categories</span>
+          <span className="text-[11px] font-semibold uppercase tracking-[0.08em]" style={{ color: "hsl(220 8% 55%)" }}>Categories</span>
         </div>
 
         {/* Categories */}
-        <nav className="space-y-px">
+        <nav className="space-y-1.5">
           {filteredCategories.map((category) => {
             const Icon = category.icon;
             const isActive = selectedCategory === category.id;
@@ -59,15 +52,18 @@ const MarketplaceSidebar = ({ selectedCategory, onCategorySelect }: MarketplaceS
               <button
                 key={category.id ?? "all"}
                 onClick={() => onCategorySelect(category.id)}
-                className={`flex items-center gap-2.5 w-full px-2.5 py-[9px] rounded-lg text-left transition-all duration-150 group ${
-                  isActive 
-                    ? "bg-gray-900 text-white shadow-sm shadow-gray-900/10" 
-                    : "hover:bg-black/[0.04] text-gray-600"
-                }`}
+                className="flex items-center gap-2.5 w-full px-3 py-[10px] rounded-xl text-left transition-all duration-200 group"
+                style={isActive ? {
+                  background: "hsl(220 6% 90%)",
+                  boxShadow: "inset 3px 3px 6px rgba(163,168,178,0.5), inset -3px -3px 6px rgba(255,255,255,0.7)",
+                  color: "hsl(220 15% 22%)",
+                } : {
+                  color: "hsl(220 8% 50%)",
+                }}
               >
-                <Icon className={`w-[15px] h-[15px] transition-colors ${isActive ? "text-white/80" : "text-gray-400 group-hover:text-gray-600"}`} />
+                <Icon className="w-[15px] h-[15px] transition-colors" style={{ color: isActive ? "hsl(220 15% 30%)" : "hsl(220 8% 60%)" }} />
                 <span className="text-[13px] font-medium flex-1">{category.name}</span>
-                <span className={`text-[11px] font-medium transition-colors ${isActive ? "text-white/60" : "text-gray-400"}`}>
+                <span className="text-[11px] font-medium" style={{ color: isActive ? "hsl(220 8% 45%)" : "hsl(220 8% 65%)" }}>
                   {category.count}
                 </span>
               </button>
@@ -75,30 +71,37 @@ const MarketplaceSidebar = ({ selectedCategory, onCategorySelect }: MarketplaceS
           })}
         </nav>
 
-        <div className="h-px bg-black/[0.04] my-4" />
+        <div className="h-px my-4" style={{ background: "hsl(220 6% 84%)" }} />
 
         {/* Filters */}
         <div className="flex items-center gap-1.5 mb-3 px-1">
-          <SlidersHorizontal className="w-3.5 h-3.5 text-gray-400" />
-          <span className="text-[11px] font-semibold text-gray-400 uppercase tracking-[0.08em]">Filters</span>
+          <SlidersHorizontal className="w-3.5 h-3.5" style={{ color: "hsl(220 8% 55%)" }} />
+          <span className="text-[11px] font-semibold uppercase tracking-[0.08em]" style={{ color: "hsl(220 8% 55%)" }}>Filters</span>
         </div>
-        <div className="space-y-2.5 px-1">
+        <div className="space-y-3 px-1">
           {[
             { label: "Free to use", checked: true },
             { label: "Verified only", checked: true },
             { label: "Top rated (4.5+)", checked: false },
           ].map((filter) => (
             <label key={filter.label} className="flex items-center gap-2.5 cursor-pointer group">
-              <input 
-                type="checkbox" 
-                className="w-3.5 h-3.5 rounded border-gray-300 text-gray-900 focus:ring-gray-500 focus:ring-offset-0 transition" 
-                defaultChecked={filter.checked} 
-              />
-              <span className="text-[13px] text-gray-500 group-hover:text-gray-800 transition-colors">{filter.label}</span>
+              <div className="relative">
+                <input 
+                  type="checkbox" 
+                  className="w-4 h-4 rounded appearance-none cursor-pointer transition-all duration-200"
+                  style={{
+                    background: "hsl(220 6% 90%)",
+                    boxShadow: filter.checked
+                      ? "inset 2px 2px 4px rgba(163,168,178,0.5), inset -2px -2px 4px rgba(255,255,255,0.7)"
+                      : "2px 2px 4px rgba(163,168,178,0.4), -2px -2px 4px rgba(255,255,255,0.6)",
+                  }}
+                  defaultChecked={filter.checked} 
+                />
+              </div>
+              <span className="text-[13px] group-hover:text-foreground transition-colors" style={{ color: "hsl(220 8% 50%)" }}>{filter.label}</span>
             </label>
           ))}
         </div>
-
       </div>
     </aside>
   );
